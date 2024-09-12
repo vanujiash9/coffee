@@ -46,14 +46,17 @@ const App = () => {
             <Route path="review" element={<Review />} />
             <Route path="product3" element={<Product3 />} />
             <Route path="feedback" element={<Feedback />} />
-            <Route path="caresoult" element={<Index/>} />
+            <Route path="caresoult" element={<Index />} />
             <Route path="blog" element={<Blog1 />} />
             <Route path="profile" element={<Profile />} />
-            <Route path="Faq" element={<Faq1/>} />
+            <Route path="Faq" element={<Faq1 />} />
             <Route path="navigation" element={<Navigation />} />
+<<<<<<< HEAD
             <Route path="music" element={<Music />} />
             <Route path="admin" element={<AdminDashboard />} />
 
+=======
+>>>>>>> c35f06d290e7dc9d275ce4669bf10d8c890bb9cc
             <Route path="login" element={<Login />} />
           </Route>
         </Routes>
