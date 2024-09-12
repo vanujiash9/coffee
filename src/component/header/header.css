@@ -1,0 +1,171 @@
+/* Header.css */
+
+/* Tổng quát về header */
+.header {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff; /* Màu nền sáng mặc định */
+    color: #1a202c; /* Màu chữ mặc định */
+    transition: background-color 0.3s, color 0.3s; /* Chuyển đổi mượt */
+}
+
+/* Chế độ tối cho header */
+.header.dark-mode {
+    background-color: #000000; /* Nền đen cho chế độ tối */
+    color: #ffffff; /* Màu chữ trắng trong chế độ tối */
+}
+
+/* Logo trong header */
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: inherit; /* Sử dụng màu chữ của parent (header) */
+    margin-right: 2rem;
+}
+
+.logo-image {
+    width: 3rem;
+    height: auto;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    margin-left: 0.5rem;
+    line-height: 1;
+}
+
+/* Link navigation trong header */
+.nav-link {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: inherit; /* Sử dụng màu chữ của parent (header) */
+    text-decoration: none;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #cfcfcf; /* Màu khi hover hoặc active trong chế độ tối */
+    font-weight: 700;
+}
+
+/* Input tìm kiếm trong header */
+.search-container {
+    position: relative;
+    flex-grow: 1;
+    margin: 0 1rem;
+}
+
+.search-input {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 0.5rem 2.5rem;
+    border-radius: 9999px;
+    width: 100%;
+    font-size: 1rem;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s, color 0.3s; /* Chuyển đổi mượt */
+}
+
+/* Search input trong chế độ tối */
+.header.dark-mode .search-input {
+    background-color: #333333;
+    border-color: #444444;
+    color: #ffffff;
+}
+
+/* Search icon */
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    color: #333;
+}
+
+.header.dark-mode .search-icon {
+    color: #ffffff;
+}
+
+/* Suggestion styling */
+.suggestion {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.suggestion:hover {
+    background-color: #e2e2e2;
+}
+
+/* Suggestion trong chế độ tối */
+.header.dark-mode .suggestion {
+    background-color: #444444;
+    color: #ffffff;
+}
+
+.header.dark-mode .suggestion:hover {
+    background-color: #555555;
+}
+
+/* Nút Profile, Login, và Giỏ hàng */
+.profile-button,
+.login-button {
+    font-size: 1.25rem;
+    color: inherit; /* Sử dụng màu của parent */
+    text-decoration: none;
+}
+
+.profile-button:hover,
+.login-button:hover {
+    color: #cfcfcf;
+}
+
+/* Cart button */
+.cart-button {
+    position: relative;
+    font-size: 2rem;
+    color: inherit; /* Sử dụng màu của parent */
+}
+
+.cart-button:hover {
+    color: #cfcfcf;
+}
+
+/* Cart count badge */
+.cart-count {
+    position: absolute;
+    top: -0.25rem;
+    right: -0.25rem;
+    background-color: #e53e3e;
+    color: white;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Cart count trong chế độ tối */
+.header.dark-mode .cart-count {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Menu di động */
+.mobile-menu {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.header.dark-mode .mobile-menu {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.header.dark-mode .mobile-menu a {
+    color: #ffffff;
+}
