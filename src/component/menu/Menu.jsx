@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom"; // Import Link for navigation
+import Swal from 'sweetalert2'; // Import SweetAlert2
 import MenuCart from "./MenuCart";
 import Footer from "../header/Footer";
 import Review from "./review";
@@ -26,6 +27,14 @@ const Menu = () => {
       cart.push({ ...product, quantity: 1 });
     }
     localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Hiển thị thông báo khi thêm vào giỏ hàng
+    Swal.fire({
+      icon: 'success',
+      title: 'Đã thêm vào giỏ hàng!',
+      text: `${product.title} đã được thêm vào giỏ hàng.`,
+      confirmButtonText: 'OK'
+    });
   };
 
   return (
@@ -77,17 +86,16 @@ const Menu = () => {
           </label>
         </div>
         <div className="flex flex-wrap gap-8 justify-center items-center lg:px px-5">
-          <MenuCart img={imn7} title="Espresso" price="150.000" addToCart={() => addToCart({ img: imn7, title: "Espresso", price: "150.000" })} />
-          <MenuCart img={imn2} title="Latte" price="180.000" addToCart={() => addToCart({ img: imn2, title: "Latte", price: "180.000" })} />
-          <MenuCart img={imn3} title="Cappuccino" price="200.000" addToCart={() => addToCart({ img: imn3, title: "Cappuccino", price: "200.000" })} />
-          <MenuCart img={imn1} title="Americano" price="170.000" addToCart={() => addToCart({ img: imn1, title: "Americano", price: "170.000" })} />
-          <MenuCart img={imn5} title="Macchiato" price="190.000" addToCart={() => addToCart({ img: imn5, title: "Macchiato", price: "190.000" })} />
-          <MenuCart img={imn9} title="Mocha" price="220.000" addToCart={() => addToCart({ img: imn9, title: "Mocha", price: "220.000" })} />
-          <MenuCart img={imn6} title="Flat White" price="210.000" addToCart={() => addToCart({ img: imn6, title: "Flat White", price: "210.000" })} />
-          <MenuCart img={imn4} title="Affogato" price="250.000" addToCart={() => addToCart({ img: imn4, title: "Affogato", price: "250.000" })} />
-          <MenuCart img={imn8} title="Irish Coffee" price="280.000" addToCart={() => addToCart({ img: imn8, title: "Irish Coffee", price: "280.000" })} />
+          <MenuCart img={imn7} title="Espresso" price="150.000" addToCart={() => addToCart({ img: imn7, title: "Espresso", price: "150.000", id: 1 })} />
+          <MenuCart img={imn2} title="Latte" price="180.000" addToCart={() => addToCart({ img: imn2, title: "Latte", price: "180.000", id: 2 })} />
+          <MenuCart img={imn3} title="Cappuccino" price="200.000" addToCart={() => addToCart({ img: imn3, title: "Cappuccino", price: "200.000", id: 3 })} />
+          <MenuCart img={imn1} title="Americano" price="170.000" addToCart={() => addToCart({ img: imn1, title: "Americano", price: "170.000", id: 4 })} />
+          <MenuCart img={imn5} title="Macchiato" price="190.000" addToCart={() => addToCart({ img: imn5, title: "Macchiato", price: "190.000", id: 5 })} />
+          <MenuCart img={imn9} title="Mocha" price="220.000" addToCart={() => addToCart({ img: imn9, title: "Mocha", price: "220.000", id: 6 })} />
+          <MenuCart img={imn6} title="Flat White" price="210.000" addToCart={() => addToCart({ img: imn6, title: "Flat White", price: "210.000", id: 7 })} />
+          <MenuCart img={imn4} title="Affogato" price="250.000" addToCart={() => addToCart({ img: imn4, title: "Affogato", price: "250.000", id: 8 })} />
+          <MenuCart img={imn8} title="Irish Coffee" price="280.000" addToCart={() => addToCart({ img: imn8, title: "Irish Coffee", price: "280.000", id: 9 })} />
         </div>
-        {/* Add Music Button */}
         <div className="mt-8">
           <Link to="/coffee/music">
             <button className="bg-blue-500 text-white py-2 px-6 rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-300">
