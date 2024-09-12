@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useState } from "react";
+import FavoritesSection from "./favorite";
 
 const Profile = () => {
-  const [activeSection, setActiveSection] = useState('profile'); // Thay đổi phần nội dung hiển thị
+  const [activeSection, setActiveSection] = useState("profile"); // Thay đổi phần nội dung hiển thị
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: 'James Bhatta',
-    email: 'james.bhatta@example.com',
-    phone: '+84 123 456 789',
-    address: '123 Đường ABC, Thành phố XYZ, Việt Nam',
+    fullName: "James Bhatta",
+    email: "james.bhatta@example.com",
+    phone: "+84 123 456 789",
+    address: "123 Đường ABC, Thành phố XYZ, Việt Nam",
   });
 
   const handleEditClick = () => {
@@ -28,14 +29,14 @@ const Profile = () => {
 
   const handleSaveChanges = () => {
     // Gửi dữ liệu đến API hoặc lưu trữ dữ liệu
-    console.log('Thông tin đã lưu:', formData);
+    console.log("Thông tin đã lưu:", formData);
     setIsEditing(false);
   };
 
   const handleLogout = () => {
-    if (window.confirm('Bạn chắc chắn muốn đăng xuất không?')) {
+    if (window.confirm("Bạn chắc chắn muốn đăng xuất không?")) {
       // Thực hiện các hành động đăng xuất, chẳng hạn như xóa token và chuyển hướng
-      console.log('Đăng xuất thành công');
+      console.log("Đăng xuất thành công");
     }
   };
 
@@ -50,7 +51,9 @@ const Profile = () => {
             alt="James Bhatta"
           />
           <div>
-            <h2 className="text-2xl font-semibold text-gray-800">James Bhatta</h2>
+            <h2 className="text-2xl font-semibold text-gray-800">
+              James Bhatta
+            </h2>
             <p className="text-sm text-gray-600">Người dùng đã xác thực</p>
           </div>
         </div>
@@ -59,8 +62,12 @@ const Profile = () => {
           <li>
             <a
               href="#"
-              onClick={() => setActiveSection('dashboard')}
-              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${activeSection === 'dashboard' ? 'bg-gray-200' : 'hover:bg-gray-200'}`}
+              onClick={() => setActiveSection("dashboard")}
+              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${
+                activeSection === "dashboard"
+                  ? "bg-gray-200"
+                  : "hover:bg-gray-200"
+              }`}
             >
               <span className="text-gray-600">
                 <svg
@@ -84,8 +91,12 @@ const Profile = () => {
           <li>
             <a
               href="#"
-              onClick={() => setActiveSection('notifications')}
-              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${activeSection === 'notifications' ? 'bg-gray-200' : 'hover:bg-gray-200'}`}
+              onClick={() => setActiveSection("notifications")}
+              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${
+                activeSection === "notifications"
+                  ? "bg-gray-200"
+                  : "hover:bg-gray-200"
+              }`}
             >
               <span className="text-gray-600">
                 <svg
@@ -109,8 +120,12 @@ const Profile = () => {
           <li>
             <a
               href="#"
-              onClick={() => setActiveSection('messages')}
-              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${activeSection === 'messages' ? 'bg-gray-200' : 'hover:bg-gray-200'}`}
+              onClick={() => setActiveSection("messages")}
+              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${
+                activeSection === "messages"
+                  ? "bg-gray-200"
+                  : "hover:bg-gray-200"
+              }`}
             >
               <span className="text-gray-600">
                 <svg
@@ -134,8 +149,12 @@ const Profile = () => {
           <li>
             <a
               href="#"
-              onClick={() => setActiveSection('profile')}
-              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${activeSection === 'profile' ? 'bg-gray-200' : 'hover:bg-gray-200'}`}
+              onClick={() => setActiveSection("profile")}
+              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${
+                activeSection === "profile"
+                  ? "bg-gray-200"
+                  : "hover:bg-gray-200"
+              }`}
             >
               <span className="text-gray-600">
                 <svg
@@ -159,8 +178,10 @@ const Profile = () => {
           <li>
             <a
               href="#"
-              onClick={() => setActiveSection('orders')}
-              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${activeSection === 'orders' ? 'bg-gray-200' : 'hover:bg-gray-200'}`}
+              onClick={() => setActiveSection("orders")}
+              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${
+                activeSection === "orders" ? "bg-gray-200" : "hover:bg-gray-200"
+              }`}
             >
               <span className="text-gray-600">
                 <svg
@@ -184,8 +205,12 @@ const Profile = () => {
           <li>
             <a
               href="#"
-              onClick={() => setActiveSection('favorites')}
-              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${activeSection === 'favorites' ? 'bg-gray-200' : 'hover:bg-gray-200'}`}
+              onClick={() => setActiveSection("favorites")}
+              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${
+                activeSection === "favorites"
+                  ? "bg-gray-200"
+                  : "hover:bg-gray-200"
+              }`}
             >
               <span className="text-gray-600">
                 <svg
@@ -209,8 +234,12 @@ const Profile = () => {
           <li>
             <a
               href="#"
-              onClick={() => setActiveSection('changePassword')}
-              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${activeSection === 'changePassword' ? 'bg-gray-200' : 'hover:bg-gray-200'}`}
+              onClick={() => setActiveSection("changePassword")}
+              className={`flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium ${
+                activeSection === "changePassword"
+                  ? "bg-gray-200"
+                  : "hover:bg-gray-200"
+              }`}
             >
               <span className="text-gray-600">
                 <svg
@@ -233,7 +262,7 @@ const Profile = () => {
           </li>
           <li>
             <a
-              href="#"
+              href="/coffee/login"
               onClick={handleLogout}
               className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline cursor-pointer"
             >
@@ -261,7 +290,7 @@ const Profile = () => {
 
       {/* Main Content */}
       <div className="w-full md:w-9/12 p-4">
-        {activeSection === 'profile' && (
+        {activeSection === "profile" && (
           <>
             <h1 className="text-3xl font-semibold mb-4">Hồ Sơ Của Tôi</h1>
             <div className="bg-white p-6 rounded-lg shadow-md mb-4">
@@ -276,7 +305,9 @@ const Profile = () => {
                   <span>{formData.email}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-medium text-gray-700">Số điện thoại:</span>
+                  <span className="font-medium text-gray-700">
+                    Số điện thoại:
+                  </span>
                   <span>{formData.phone}</span>
                 </div>
                 <div className="flex justify-between">
@@ -295,10 +326,14 @@ const Profile = () => {
             {isEditing && (
               <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
                 <div className="bg-white p-6 rounded-lg shadow-lg w-full md:w-1/2">
-                  <h2 className="text-xl font-semibold mb-4">Chỉnh sửa thông tin</h2>
+                  <h2 className="text-xl font-semibold mb-4">
+                    Chỉnh sửa thông tin
+                  </h2>
                   <form>
                     <div className="mb-4">
-                      <label className="block text-gray-700 font-medium mb-2">Họ và tên:</label>
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Họ và tên:
+                      </label>
                       <input
                         type="text"
                         name="fullName"
@@ -308,7 +343,9 @@ const Profile = () => {
                       />
                     </div>
                     <div className="mb-4">
-                      <label className="block text-gray-700 font-medium mb-2">Email:</label>
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Email:
+                      </label>
                       <input
                         type="email"
                         name="email"
@@ -318,7 +355,9 @@ const Profile = () => {
                       />
                     </div>
                     <div className="mb-4">
-                      <label className="block text-gray-700 font-medium mb-2">Số điện thoại:</label>
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Số điện thoại:
+                      </label>
                       <input
                         type="text"
                         name="phone"
@@ -328,7 +367,9 @@ const Profile = () => {
                       />
                     </div>
                     <div className="mb-4">
-                      <label className="block text-gray-700 font-medium mb-2">Địa chỉ:</label>
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Địa chỉ:
+                      </label>
                       <input
                         type="text"
                         name="address"
@@ -360,43 +401,180 @@ const Profile = () => {
           </>
         )}
 
-        {activeSection === 'messages' && (
+        {activeSection === "messages" && (
           <div className="bg-white p-6 rounded-lg shadow-md mb-4">
             <h2 className="text-2xl font-semibold mb-4">Tin nhắn cá nhân</h2>
+
             {/* Giao diện tin nhắn cá nhân */}
-            <p>Giao diện tin nhắn cá nhân sẽ được hiển thị ở đây.</p>
+            <div className="message-container">
+              <div className="message sender bg-blue-100 p-4 rounded-lg mb-2">
+                <p>
+                  <strong>Người gửi 1:</strong> Xin chào! Bạn có khỏe không?
+                </p>
+                <span className="text-xs text-gray-500">10:00 AM</span>
+              </div>
+              <div className="message receiver bg-green-100 p-4 rounded-lg mb-2">
+                <p>
+                  <strong>Người nhận:</strong> Chào! Tôi khỏe, cảm ơn bạn.
+                </p>
+                <span className="text-xs text-gray-500">10:02 AM</span>
+              </div>
+              <div className="message sender bg-blue-100 p-4 rounded-lg mb-2">
+                <p>
+                  <strong>Người gửi 1:</strong> Bạn đã hoàn thành dự án chưa?
+                </p>
+                <span className="text-xs text-gray-500">10:05 AM</span>
+              </div>
+              <div className="message receiver bg-green-100 p-4 rounded-lg mb-2">
+                <p>
+                  <strong>Người nhận:</strong> Vẫn chưa, tôi đang làm dở.
+                </p>
+                <span className="text-xs text-gray-500">10:07 AM</span>
+              </div>
+            </div>
+
+            {/* Ô nhập tin nhắn */}
+            <div className="message-input mt-4">
+              <input
+                type="text"
+                className="border border-gray-300 rounded-lg p-2 w-full"
+                placeholder="Nhập tin nhắn của bạn..."
+              />
+              <button className="bg-blue-500 text-white p-2 rounded-lg mt-2">
+                Gửi
+              </button>
+            </div>
           </div>
         )}
 
-        {activeSection === 'notifications' && (
+        {activeSection === "notifications" && (
           <div className="bg-white p-6 rounded-lg shadow-md mb-4">
             <h2 className="text-2xl font-semibold mb-4">Thông báo</h2>
-            {/* Giao diện thông báo */}
-            <p>Giao diện thông báo sẽ được hiển thị ở đây.</p>
+            <div className="notification-container">
+              <div className="notification bg-yellow-100 p-4 rounded-lg mb-2">
+                <p className="font-bold">Thông báo 1:</p>
+                <p className="text-sm">Đơn hàng của bạn đã được xác nhận.</p>
+                <span className="text-xs text-gray-500">9:30 AM</span>
+              </div>
+              <div className="notification bg-yellow-100 p-4 rounded-lg mb-2">
+                <p className="font-bold">Thông báo 2:</p>
+                <p className="text-sm">
+                  Bạn có một tin nhắn mới từ hỗ trợ khách hàng.
+                </p>
+                <span className="text-xs text-gray-500">9:15 AM</span>
+              </div>
+              <div className="notification bg-yellow-100 p-4 rounded-lg mb-2">
+                <p className="font-bold">Thông báo 3:</p>
+                <p className="text-sm">
+                  Cập nhật: Chính sách bảo mật đã thay đổi.
+                </p>
+                <span className="text-xs text-gray-500">8:45 AM</span>
+              </div>
+            </div>
           </div>
         )}
 
-        {activeSection === 'orders' && (
+        {activeSection === "orders" && (
           <div className="bg-white p-6 rounded-lg shadow-md mb-4">
             <h2 className="text-2xl font-semibold mb-4">Đơn hàng của tôi</h2>
+
             {/* Giao diện đơn hàng */}
-            <p>Giao diện đơn hàng sẽ được hiển thị ở đây.</p>
+            <div className="order-list">
+              {/* Đơn hàng 1 */}
+              <div className="order bg-gray-100 p-4 rounded-lg mb-4">
+                <div className="flex justify-between items-center mb-2">
+                  <p className="font-bold">Mã đơn hàng: #123456</p>
+                  <p className="text-green-500">Trạng thái: Đã giao</p>
+                </div>
+                <p>Ngày đặt hàng: 12/09/2024</p>
+                <p>Số tiền: 1.200.000 VND</p>
+              </div>
+
+              {/* Đơn hàng 2 */}
+              <div className="order bg-gray-100 p-4 rounded-lg mb-4">
+                <div className="flex justify-between items-center mb-2">
+                  <p className="font-bold">Mã đơn hàng: #654321</p>
+                  <p className="text-yellow-500">Trạng thái: Đang giao</p>
+                </div>
+                <p>Ngày đặt hàng: 10/09/2024</p>
+                <p>Số tiền: 850.000 VND</p>
+              </div>
+
+              {/* Đơn hàng 3 */}
+              <div className="order bg-gray-100 p-4 rounded-lg mb-4">
+                <div className="flex justify-between items-center mb-2">
+                  <p className="font-bold">Mã đơn hàng: #789012</p>
+                  <p className="text-red-500">Trạng thái: Đã hủy</p>
+                </div>
+                <p>Ngày đặt hàng: 08/09/2024</p>
+                <p>Số tiền: 2.500.000 VND</p>
+              </div>
+            </div>
           </div>
         )}
 
-        {activeSection === 'favorites' && (
-          <div className="bg-white p-6 rounded-lg shadow-md mb-4">
-            <h2 className="text-2xl font-semibold mb-4">Danh sách yêu thích</h2>
-            {/* Giao diện danh sách yêu thích */}
-            <p>Giao diện danh sách yêu thích sẽ được hiển thị ở đây.</p>
-          </div>
+        {activeSection === "favorites" && (
+          <FavoritesSection/>
         )}
 
-        {activeSection === 'changePassword' && (
+        {activeSection === "changePassword" && (
           <div className="bg-white p-6 rounded-lg shadow-md mb-4">
             <h2 className="text-2xl font-semibold mb-4">Đổi mật khẩu</h2>
+
             {/* Giao diện đổi mật khẩu */}
-            <p>Giao diện đổi mật khẩu sẽ được hiển thị ở đây.</p>
+            <form>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="oldPassword"
+                >
+                  Mật khẩu cũ
+                </label>
+                <input
+                  type="password"
+                  id="oldPassword"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Nhập mật khẩu cũ"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="newPassword"
+                >
+                  Mật khẩu mới
+                </label>
+                <input
+                  type="password"
+                  id="newPassword"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Nhập mật khẩu mới"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="confirmPassword"
+                >
+                  Xác nhận mật khẩu mới
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Xác nhận mật khẩu mới"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Đổi mật khẩu
+              </button>
+            </form>
           </div>
         )}
       </div>

@@ -19,6 +19,8 @@ import Blog1 from "./component/blog/blog";
 import Profile from "./component/Profile/Profile";
 import Faq1 from "./component/contact/Faq";
 import Navigation from "./component/About/Navigation";
+import Music from "./component/Music/Music";
+import AdminDashboard from "./component/Profile/Admin";
 const App = () => {
   useEffect(() => {
     AOS.init({
@@ -49,6 +51,8 @@ const App = () => {
             <Route path="profile" element={<Profile />} />
             <Route path="Faq" element={<Faq1/>} />
             <Route path="navigation" element={<Navigation />} />
+            <Route path="music" element={<Music />} />
+            <Route path="admin" element={<AdminDashboard />} />
 
             <Route path="login" element={<Login />} />
           </Route>

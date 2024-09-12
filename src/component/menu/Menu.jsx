@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Link } from "react-router-dom"; // Import Link for navigation
 import MenuCart from "./MenuCart";
 import Footer from "../header/Footer";
 import Review from "./review";
+import Index from "./feedback2";
 import imn1 from "../assets/website/2c96dab0ec3706fdf4d6b21090a104ac.jpg";
 import imn2 from "../assets/website/27780fc651dff0eb419b06ecf93a3055.jpg";
 import imn3 from "../assets/website/d191162bab13fb9f788a1dc3334eecf6.jpg";
@@ -11,30 +13,20 @@ import imn6 from "../assets/website/e3615d551329c1343da0a052b4173ae6.jpg";
 import imn7 from "../assets/website/3c46922bbf6faa03c92f4b7fa29e233e.jpg";
 import imn8 from "../assets/website/166be34df841eff4d5a6303cb031d3b0.jpg";
 import imn9 from "../assets/website/1bbf21967acbd14e429803d4dbe29d49.jpg";
-import Index from "./feedback2";
 
 const Menu = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const addToCart = (product) => {
-    // Retrieve existing cart from localStorage
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    // Check if the product is already in the cart
-    const existingProductIndex = cart.findIndex(item => item.id === product.id);
-    
-    if (existingProductIndex > -1) {
-        // If the product is already in the cart, update the quantity
-        cart[existingProductIndex].quantity += 1;
-    } else {
-        // If the product is not in the cart, add it
-        cart.push({ ...product, quantity: 1 });
-    }
-    
-    // Save updated cart to localStorage
-    localStorage.setItem('cart', JSON.stringify(cart));
-};
 
-  
+  const addToCart = (product) => {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const existingProductIndex = cart.findIndex(item => item.id === product.id);
+    if (existingProductIndex > -1) {
+      cart[existingProductIndex].quantity += 1;
+    } else {
+      cart.push({ ...product, quantity: 1 });
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+  };
 
   return (
     <div className={`min-h-screen ${darkMode ? "bg-gray-900 text-gray-300" : "bg-white text-gray-900"}`}>
@@ -95,12 +87,18 @@ const Menu = () => {
           <MenuCart img={imn4} title="Affogato" price="250.000" addToCart={() => addToCart({ img: imn4, title: "Affogato", price: "250.000" })} />
           <MenuCart img={imn8} title="Irish Coffee" price="280.000" addToCart={() => addToCart({ img: imn8, title: "Irish Coffee", price: "280.000" })} />
         </div>
-     
+        {/* Add Music Button */}
+        <div className="mt-8">
+          <Link to="/coffee/music">
+            <button className="bg-blue-500 text-white py-2 px-6 rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-300">
+             Bạn có thể order bài hát của quán tại đây
+            </button>
+          </Link>
+        </div>
       </div>
       <Review />
-      <Index/>
+      <Index />
       <Footer darkMode={darkMode} />
-
     </div>
   );
 };
