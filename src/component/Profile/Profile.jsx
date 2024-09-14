@@ -513,9 +513,7 @@ const Profile = () => {
           </div>
         )}
 
-        {activeSection === "favorites" && (
-          <FavoritesSection/>
-        )}
+        {activeSection === "favorites" && <FavoritesSection />}
 
         {activeSection === "changePassword" && (
           <div className="bg-white p-6 rounded-lg shadow-md mb-4">

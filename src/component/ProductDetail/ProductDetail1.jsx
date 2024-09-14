@@ -60,77 +60,77 @@ const Menu = () => {
       <div className="relative overflow-hidden group h-[500px] bg-primary card-hidden">
         <img
           src="https://images.unsplash.com/photo-1527368746281-798b65e1ac6e?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3"
-          className="h-full transition-all delay-300 duration-400 ease-in w-full absolute group-hover:scale-105 object-center"
+          className="h-full transition-transform duration-500 ease-in-out w-full absolute group-hover:scale-110 object-cover"
           alt="Decorative background"
         />
-        <div className="absolute p-8 z-50 gap-4 flex flex-col justify-end bg-opacity-45 h-full w-full bottom-0">
-          <span className="text-[20px] sm:text-[24px] text-white md:text-[28px] font-canela">
-            Welcome to our Menu
+        <div className="absolute p-8 z-50 flex flex-col justify-end bg-opacity-45 h-full w-full bottom-0">
+          <span className="text-3xl sm:text-4xl text-white md:text-5xl font-bold">
+            Welcome to Our Menu
           </span>
-          <p className="group-hover:block text-white text-[14px] hidden">
+          <p className="group-hover:block text-white text-lg hidden">
             Enjoy amazing beverages at our shop. Strong coffee, fragrant tea, and more are waiting for you!
           </p>
-
-          <a href="contactus.html" className="flex items-center gap-2">
+          <Link to="/contactus" className="flex items-center gap-2 mt-4">
             <div className="flex group-hover:bg-secondary justify-center items-center rounded-full bg-primary min-h-10 min-w-10 max-h-10 max-w-10">
               <img
                 src="https://images.unsplash.com/photo-1595239244990-b609da3d95f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
-                className="w-[28px] h-8 rounded-full overflow-hidden"
+                className="w-8 h-8 rounded-full overflow-hidden"
                 alt="Contact Us"
               />
             </div>
-            <h2 className="font-bold text-[16px] text-white">Maxion coffee</h2>
-          </a>
+            <h2 className="font-semibold text-lg text-white">Maxion Coffee</h2>
+          </Link>
         </div>
-        <div className="absolute transition-all duration-400 ease-in bg-gradient-to-b from-transparent to-black min-h-[650px] text-white bottom-0 group-hover:bottom-0 group-hover:min-h-[900px] w-full z-30" />
+        <div className="absolute transition-all duration-500 ease-in-out bg-gradient-to-b from-transparent to-black min-h-[650px] text-white bottom-0 group-hover:bottom-0 group-hover:min-h-[900px] w-full z-30" />
       </div>
 
       {/* Menu Section */}
       <div className="p-5 flex flex-col items-center min-h-screen">
         <div className="flex flex-col justify-center items-center w-full mb-10">
-          <h1 className="text-4xl font-semibold text-center">Our Menu</h1>
+          <h1 className="text-4xl font-bold text-center mb-4">Our Menu</h1>
           <input
             type="text"
             placeholder="Search for a drink..."
-            className="mt-4 p-2 border rounded"
+            className="mt-4 p-3 border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <label className="inline-flex items-center cursor-pointer mt-5">
+          <label className="inline-flex items-center cursor-pointer mt-6">
             <input
               type="checkbox"
               className="sr-only"
               checked={darkMode}
               onChange={() => setDarkMode(!darkMode)}
             />
-            <div className={`relative w-11 h-6 rounded-full transition-colors duration-200 ease-in-out ${darkMode ? "bg-blue-900" : "bg-gray-200"}`}>
-              <span className={`absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-200 ease-in-out ${darkMode ? "translate-x-full" : ""}`} />
+            <div className={`relative w-12 h-7 rounded-full transition-colors duration-300 ease-in-out ${darkMode ? "bg-blue-900" : "bg-gray-300"}`}>
+              <span className={`absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform duration-300 ease-in-out ${darkMode ? "translate-x-5" : ""}`} />
             </div>
-            <span className="ml-3 text-gray-500">{darkMode ? "Dark" : "Light"}</span>
+            <span className="ml-3 text-gray-500 text-lg">{darkMode ? "Dark" : "Light"}</span>
           </label>
         </div>
 
-        <div className="flex flex-wrap gap-8 justify-center items-center lg:px px-5">
+        {/* Grid Layout for Menu Items */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full px-4">
           {filteredItems.length > 0 ? (
             filteredItems.map((item) => (
-              <MenuCart
-                key={item.id}
-                img={item.img}
-                title={item.title}
-                price={item.price}
-                id={item.id}
-                addToCart={() => addToCart(item)}
-              />
+              <Link key={item.id} to={`/coffee/productdetail/${item.id}`} className="w-full">
+                <MenuCart
+                  img={item.img}
+                  title={item.title}
+                  price={item.price}
+                  addToCart={() => addToCart(item)}
+                />
+              </Link>
             ))
           ) : (
-            <p className="text-center text-gray-600">No items match your search.</p>
+            <p className="text-center text-gray-600 col-span-full">No items match your search.</p>
           )}
         </div>
 
         <div className="mt-8">
           <Link to="/coffee/music">
-            <button className="bg-blue-500 text-white py-2 px-6 rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-300">
-              You can order songs for the café here
+            <button className="bg-blue-600 text-white py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300">
+              Order Songs for the Café
             </button>
           </Link>
         </div>

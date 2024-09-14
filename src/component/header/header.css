@@ -4,6 +4,10 @@
     background-color: #ffffff;
     color: #1a202c;
     transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Dark mode for header */
@@ -39,6 +43,7 @@
     font-weight: 500;
     color: inherit;
     text-decoration: none;
+    margin: 0 1rem;
 }
 
 .nav-link:hover,
@@ -115,6 +120,7 @@
     font-size: 1.25rem;
     color: inherit;
     text-decoration: none;
+    margin: 0 1rem;
 }
 
 .profile-button:hover,
@@ -160,6 +166,10 @@
 .mobile-menu {
     background-color: #ffffff;
     color: #000000;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    margin-left: auto;
 }
 
 .header.dark-mode .mobile-menu {
@@ -169,4 +179,47 @@
 
 .header.dark-mode .mobile-menu a {
     color: #ffffff;
+}
+
+/* Mobile menu styling */
+.mobile-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    display: none;
+    flex-direction: column;
+}
+
+.header.dark-mode .mobile-menu-dropdown {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.mobile-menu.active + .mobile-menu-dropdown {
+    display: flex;
+}
+
+/* Mobile menu links */
+.mobile-menu-link {
+    font-size: 1rem;
+    color: inherit;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+
+.mobile-menu-link:hover {
+    background-color: #f0f0f0;
+}
+
+.header.dark-mode .mobile-menu-link {
+    background-color: #333333;
+}
+
+.header.dark-mode .mobile-menu-link:hover {
+    background-color: #444444;
 }

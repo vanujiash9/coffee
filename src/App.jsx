@@ -12,7 +12,6 @@ import Login from "./component/Auth/Login";
 import Contact from "./component/contact/Contact";
 import Register from "./component/Auth/Register";
 import Review from "./component/menu/review";
-import Product3 from "./component/redux/slice/detailproduct2";
 import Feedback from "./component/Home/feedback";
 import Index from "./component/About/caresoult";
 import Blog1 from "./component/blog/blog";
@@ -21,6 +20,9 @@ import Faq1 from "./component/contact/Faq";
 import Navigation from "./component/About/Navigation";
 import Music from "./component/Music/Music";
 import AdminDashboard from "./component/Profile/Admin";
+import Checkout from "./component/Cart/Checkout";
+import Checkout2 from "./component/Cart/Checkout2";
+import ProductDetail from "./component/menu/ProductPage";
 
 const App = () => {
   useEffect(() => {
@@ -45,7 +47,6 @@ const App = () => {
             <Route path="contact" element={<Contact />} />
             <Route path="register" element={<Register />} />
             <Route path="review" element={<Review />} />
-            <Route path="product3" element={<Product3 />} />
             <Route path="feedback" element={<Feedback />} />
             <Route path="caresoult" element={<Index />} />
             <Route path="blog" element={<Blog1 />} />
@@ -55,6 +56,11 @@ const App = () => {
             <Route path="music" element={<Music />} />
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="login" element={<Login />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="checkout2" element={<Checkout2 />} />
+            {/* Cập nhật route cho ProductDetail */}
+   
+            <Route path="productdetail/:id" element={<ProductDetail />} />
           </Route>
         </Routes>
       </div>

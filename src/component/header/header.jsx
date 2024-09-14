@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../assets/website/coffee_logo.png";
-import { FaCoffee, FaShoppingCart, FaUser, FaSearch, FaUserCircle } from "react-icons/fa";
+import {  FaShoppingCart, FaUser, FaSearch, FaSignOutAlt } from "react-icons/fa";
 import './header.css'; // Import the updated CSS file
 
 const Menus = [
@@ -34,12 +34,17 @@ const searchOptions = [
   { id: 20, name: "Điều khoản dịch vụ", link: "/coffee/terms" },
 ];
 
+const defaultAvatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBmunX_Sj-B11U_k7qT2yTI26xBH1TyEo9vQ&s";
+
 const Header = () => {
   const [search, setSearch] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [cartQuantity, setCartQuantity] = useState(0);
+  const [userFullName, setUserFullName] = useState(null);
+  const navigate = useNavigate(); // Hook to navigate programmatically
 
   useEffect(() => {
+    // Lấy số lượng giỏ hàng từ localStorage
     const fetchCartQuantity = () => {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
       const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -47,6 +52,20 @@ const Header = () => {
     };
 
     fetchCartQuantity();
+  }, []);
+
+  useEffect(() => {
+    // Lấy thông tin người dùng từ localStorage
+    const fetchUserData = () => {
+      const fullName = localStorage.getItem("userFullName");
+      if (fullName) {
+        setUserFullName(fullName);
+      } else {
+        setUserFullName(null); // Không có người dùng
+      }
+    };
+
+    fetchUserData();
   }, []);
 
   const handleSearchChange = (e) => {
@@ -64,6 +83,13 @@ const Header = () => {
     }, 100);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("userFullName");
+    setUserFullName(null);
+    navigate('/coffee/register'); // Chuyển hướng tới trang đăng ký
+    alert("Đăng xuất thành công!");
+  };
+
   const filteredSuggestions = search.length > 0
     ? searchOptions.filter(option =>
         option.name.toLowerCase().includes(search.toLowerCase())
@@ -77,7 +103,7 @@ const Header = () => {
         <div className="flex items-center gap-4">
           <NavLink to="/coffee/home" className="logo flex items-center gap-3">
             <img src={Logo} alt="Logo" className="logo-image" />
-            <span className="logo-text text-xl font-bold"><a href="/coffee/home">Maxion Coffee</a></span>
+            <span className="logo-text text-xl font-bold">Maxion Coffee</span>
           </NavLink>
         </div>
 
@@ -136,42 +162,48 @@ const Header = () => {
 
         {/* Profile, Login, and Cart buttons */}
         <div className="flex items-center gap-6">
-          {/* Profile button */}
-          <NavLink
-            to="/coffee/profile"
-            className="profile-button flex items-center gap-2 text-gray-600 hover:text-gray-900"
-          >
-            <FaUserCircle className="text-xl" />
-            <span className="button-text">Profile</span>
-          </NavLink>
+          {userFullName ? (
+            <>
+              {/* User Profile with Avatar */}
+              <div className="flex items-center gap-4">
+                <NavLink
+                  to="/coffee/profile"
+                  className="profile-button flex items-center gap-2 text-gray-600 hover:text-gray-900"
+                >
+                  <img src={defaultAvatar} alt="Avatar" className="w-8 h-8 rounded-full" />
+                  <span className="button-text">{userFullName}</span>
+                </NavLink>
 
-          {/* Login button */}
-          <NavLink
-            to="/coffee/login"
-            className="login-button flex items-center gap-2 text-gray-600 hover:text-gray-900"
-          >
-            <FaUser className="text-lg" />
-            <span className="button-text">Login</span>
-          </NavLink>
+                {/* Logout Button */}
+                <button
+                  onClick={handleLogout}
+                  className="logout-button flex items-center gap-2 text-gray-600 hover:text-gray-900"
+                >
+                  <FaSignOutAlt className="text-lg" />
+                  <span className="button-text">Đăng xuất</span>
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Register Button */}
+              <NavLink
+                to="/coffee/register"
+                className="register-button flex items-center gap-2 text-gray-600 hover:text-gray-900"
+              >
+                <FaUser className="text-lg" />
+                <span className="button-text">Đăng ký</span>
+              </NavLink>
+            </>
+          )}
 
           {/* Cart Icon and Quantity */}
           <div className="relative">
-            <Link to="/coffee/cart" className="cart-button flex items-center gap-2 text-gray-600 hover:text-gray-900">
+            <Link to="/coffee/cart" className="cart-link flex items-center gap-2 text-red-600 hover:text-gray-900">
               <FaShoppingCart className="text-xl" />
-              {cartQuantity > 0 && (
-                <span className="cart-count">
-                  {cartQuantity}
-                </span>
-              )}
+              <span className="cart-quantity text-sm font-bold">{cartQuantity}</span>
             </Link>
           </div>
-        </div>
-
-        {/* Mobile Icon */}
-        <div className="sm:hidden">
-          <button className="text-gray-900 text-3xl">
-            <FaCoffee />
-          </button>
         </div>
       </div>
     </header>

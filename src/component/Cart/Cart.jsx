@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom"; // Updated import
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -18,11 +19,14 @@ const Cart = () => {
     address: "123 Phố Hòa Bình, Quận 1, TP.HCM",
     phone: "0123-456-789",
     email: "david.kent@example.com",
-    avatar: "https://bazaarvietnam.vn/wp-content/uploads/2022/01/phim-hay-nhat-cua-lee-do-hyun-ldh_sky.jpg",
+    avatar:
+      "https://bazaarvietnam.vn/wp-content/uploads/2022/01/phim-hay-nhat-cua-lee-do-hyun-ldh_sky.jpg",
   });
   const [, setPaymentMethod] = useState("Cash on Delivery");
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState("Cash on Delivery");
+
+  const navigate = useNavigate(); // Updated to useNavigate
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -66,16 +70,46 @@ const Cart = () => {
   };
 
   const handleUpdateQuantity = (index, quantity) => {
-    if (quantity < 1) return;
-
+    const stock = cartItems[index].stock; // Assuming each item has a 'stock' property
+    if (quantity > stock) {
+      Swal.fire({
+        icon: "error",
+        title: "Số lượng sản phẩm trong kho đã hết",
+        text: `Chỉ còn lại ${stock} sản phẩm trong kho.`,
+      });
+      return;
+    }
+  
+    if (quantity < 0) return;
+  
+    // Only show the confirmation dialog if the new quantity will be 1
+    if (quantity === 0) {
+      Swal.fire({
+        title: "Bạn có muốn xóa sản phẩm này?",
+        text: "Số lượng là 1, nếu giảm thêm sản phẩm sẽ bị xóa.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Xóa",
+        cancelButtonText: "Hủy",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleRemoveItem(index);
+        }
+      });
+      return;
+    }
+  
+    // Update cart item quantity if the new quantity is not 1
     const updatedCart = cartItems.map((item, i) =>
-      i === index ? { ...item, quantity: Math.max(quantity, 1) } : item
+      i === index ? { ...item, quantity: Math.max(quantity, 0) } : item
     );
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     updateTotalQuantity(updatedCart);
     setCartItems(updatedCart);
     updateTotalPrice(updatedCart);
   };
+  
+
 
   const handleNoteChange = (e) => {
     setNote(e.target.value);
@@ -129,6 +163,19 @@ const Cart = () => {
     setNote((prevNote) => prevNote + (prevNote ? "\n" : "") + suggestion);
   };
 
+  const handleCheckout = () => {
+    if (cartItems.length === 0) {
+      Swal.fire({
+        title: "Giỏ hàng trống!",
+        text: "Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+    } else {
+      navigate("/coffee/checkout"); // Updated to use navigate
+    }
+  };
+
   const discount = 28000;
   const shipping = 8000;
   const finalPrice = totalPrice * 1000 - discount + shipping;
@@ -147,9 +194,7 @@ const Cart = () => {
           <div className="bg-gray-100 p-6 mb-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">Giỏ hàng</h2>
             {cartItems.length === 0 ? (
-              <p className="text-center text-gray-600">
-                Giỏ hàng của bạn đang trống.
-              </p>
+              <p className="text-center text-gray-600">Giỏ hàng của bạn đang trống.</p>
             ) : (
               cartItems.map((item, index) => (
                 <div key={index} className="flex items-center border-b py-4">
@@ -170,7 +215,7 @@ const Cart = () => {
                     </p>
                     <div className="flex items-center space-x-2 mt-2">
                       <button
-                        className="bg-gray-200 px-3 py-1 rounded"
+                        className="bg-gray-200 px-2 py-1 rounded-md"
                         onClick={() =>
                           handleUpdateQuantity(index, item.quantity - 1)
                         }
@@ -178,9 +223,9 @@ const Cart = () => {
                       >
                         -
                       </button>
-                      <p className="text-base font-semibold">{item.quantity}</p>
+                      <span>{item.quantity}</span>
                       <button
-                        className="bg-gray-200 px-3 py-1 rounded"
+                        className="bg-gray-200 px-2 py-1 rounded-md"
                         onClick={() =>
                           handleUpdateQuantity(index, item.quantity + 1)
                         }
@@ -188,7 +233,7 @@ const Cart = () => {
                         +
                       </button>
                       <button
-                        className="bg-red-500 text-white px-3 py-1 rounded"
+                        className="bg-red-500 text-white px-4 py-2 rounded-md"
                         onClick={() => handleRemoveItem(index)}
                       >
                         Xóa
@@ -225,7 +270,6 @@ const Cart = () => {
               <p>Số lượng sản phẩm</p>
               <p>{totalQuantity}</p>
             </div>
-            
           </div>
         </div>
 
@@ -295,7 +339,8 @@ const Cart = () => {
               )}
             </div>
           </div>
-          <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+
+          <div className="bg-gray-100 p-6 mb-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">Ghi chú cho đơn hàng</h2>
             <textarea
               className="w-full p-2 border border-gray-300 rounded"
@@ -326,10 +371,9 @@ const Cart = () => {
               </div>
             </div>
           </div>
+
           <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-4">
-              Phương thức thanh toán
-            </h2>
+            <h2 className="text-xl font-semibold mb-4">Phương thức thanh toán</h2>
             <div className="flex flex-col">
               <label className="flex items-center mb-2">
                 <input
@@ -373,6 +417,15 @@ const Cart = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="text-center mt-6">
+        <button
+          onClick={handleCheckout}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md"
+        >
+          Tiến hành thanh toán
+        </button>
       </div>
     </div>
   );

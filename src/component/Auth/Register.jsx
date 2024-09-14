@@ -1,28 +1,29 @@
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import * as Yup from 'yup'; // Nhập Yup để xác thực
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-// Validation schema using Yup
+// Lược đồ xác thực sử dụng Yup
 const validationSchema = Yup.object({
-  firstName: Yup.string().required('First name is required'),
-  lastName: Yup.string().required('Last name is required'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
+  firstName: Yup.string().required('Họ là bắt buộc'),
+  lastName: Yup.string().required('Tên là bắt buộc'),
+  email: Yup.string().email('Địa chỉ email không hợp lệ').required('Email là bắt buộc'),
   phone: Yup.string()
-    .matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits')
-    .required('Phone number is required'),
+    .matches(/^[0-9]{10}$/, 'Số điện thoại phải có đúng 10 chữ số')
+    .required('Số điện thoại là bắt buộc'),
   password: Yup.string()
-    .min(7, 'Password must be at least 7 characters')
-    .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
-    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-    .matches(/[0-9]/, 'Password must contain at least one number')
-    .matches(/[\W_]/, 'Password must contain at least one special character')
-    .required('Password is required'),
+    .min(8, 'Mật khẩu phải có ít nhất 8 ký tự')
+    .matches(/[a-z]/, 'Mật khẩu phải chứa ít nhất một chữ cái thường')
+    .matches(/[A-Z]/, 'Mật khẩu phải chứa ít nhất một chữ cái viết hoa')
+    .matches(/[0-9]/, 'Mật khẩu phải chứa ít nhất một chữ số')
+    .matches(/[\W_]/, 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt')
+    .required('Mật khẩu là bắt buộc'),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm password is required'),
+    .oneOf([Yup.ref('password'), null], 'Mật khẩu xác nhận không khớp')
+    .required('Xác nhận mật khẩu là bắt buộc'),
 });
 
 const Register = () => {
@@ -31,25 +32,86 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    Swal.fire({
-      icon: 'success',
-      title: 'Registered successfully',
-      text: `Welcome, ${values.firstName}!`,
-      confirmButtonText: 'OK',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate('/coffee/login');
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      // Mô phỏng yêu cầu kiểm tra tài khoản
+      const response = await fakeAccountCheck(values);
+
+      if (response.success) {
+        // Mô phỏng đăng ký thành công
+        Swal.fire({
+          icon: 'success',
+          title: 'Đăng ký thành công',
+          text: `Chào mừng, ${values.firstName}!`,
+          confirmButtonText: 'OK',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate('/coffee/login');
+          }
+        });
+      } else {
+        // Hiển thị thông báo lỗi nếu tài khoản đã tồn tại
+        Swal.fire({
+          icon: 'error',
+          title: 'Đăng ký không thành công',
+          text: response.message,
+          confirmButtonText: 'OK',
+        });
       }
-    });
-    setSubmitting(false);
+    } catch (error) {
+      // Xử lý lỗi không mong muốn
+      Swal.fire({
+        icon: 'error',
+        title: 'Có gì đó không ổn',
+        text: 'Vui lòng thử lại sau.',
+        confirmButtonText: 'OK',
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // Hàm mô phỏng kiểm tra tài khoản
+  const fakeAccountCheck = async (values) => {
+    // Mô phỏng độ trễ cho yêu cầu API
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Mô phỏng kiểm tra tài khoản
+    const existingAccounts = [
+      { email: 'user@example.com' },
+      // Thêm nhiều tài khoản thử nghiệm nếu cần
+    ];
+
+    const accountExists = existingAccounts.some(
+      (account) => account.email === values.email
+    );
+
+    if (accountExists) {
+      return { success: false, message: 'Tài khoản đã tồn tại với email này' };
+    } else {
+      // Lưu dữ liệu người dùng vào localStorage
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      users.push({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phone: values.phone,
+        password: values.password,
+      });
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      // Lưu tên đầy đủ để dễ dàng lấy ra
+      localStorage.setItem('userFullName', `${values.firstName} ${values.lastName}`);
+
+      return { success: true };
+    }
   };
 
   return (
-    <div className={`flex flex-col justify-center items-center w-full h-[100vh] ${darkMode ? 'bg-[#282D2D]' : 'bg-[#F0F0F0]'} px-5`}>
+    <div className={`flex flex-col justify-center items-center w-full h-screen ${darkMode ? 'bg-[#282D2D]' : 'bg-[#F0F0F0]'} px-5`}>
       <div className="flex flex-col items-end justify-start overflow-hidden mb-2 xl:max-w-3xl w-full">
         <div className="flex items-center">
-          <h3 className={`${darkMode ? 'text-white' : 'text-black'}`}>Dark Mode : &nbsp;</h3>
+          <h3 className={`${darkMode ? 'text-white' : 'text-black'}`}>Chế độ tối: &nbsp;</h3>
           <label className="inline-flex relative items-center cursor-pointer">
             <input
               type="checkbox"
@@ -63,17 +125,9 @@ const Register = () => {
           </label>
         </div>
       </div>
-      <div
-        className={`xl:max-w-3xl ${
-          darkMode ? "bg-black" : "bg-white"
-        } w-full p-5 sm:p-10 rounded-md`}
-      >
-        <h1
-          className={`text-center text-xl sm:text-3xl font-semibold ${
-            darkMode ? "text-white" : "text-black"
-          }`}
-        >
-          Register for a free account
+      <div className={`xl:max-w-3xl ${darkMode ? 'bg-black' : 'bg-white'} w-full p-5 sm:p-10 rounded-md`}>
+        <h1 className={`text-center text-xl sm:text-3xl font-semibold ${darkMode ? 'text-white' : 'text-black'}`}>
+          Đăng ký tài khoản miễn phí
         </h1>
         <div className="w-full mt-8">
           <Formik
@@ -87,48 +141,32 @@ const Register = () => {
                   <Field
                     name="firstName"
                     type="text"
-                    placeholder="Your first name"
-                    className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2 ${
-                      darkMode
-                        ? "bg-[#302E30] text-white focus:border-white"
-                        : "bg-gray-100 text-black focus:border-black"
-                    }`}
+                    placeholder="Họ của bạn"
+                    className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2 ${darkMode ? "bg-[#302E30] text-white focus:border-white" : "bg-gray-100 text-black focus:border-black"}`}
                   />
                   <ErrorMessage name="firstName" component="div" className="text-red-500 text-xs" />
                   
                   <Field
                     name="lastName"
                     type="text"
-                    placeholder="Your last name"
-                    className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2 ${
-                      darkMode
-                        ? "bg-[#302E30] text-white focus:border-white"
-                        : "bg-gray-100 text-black focus:border-black"
-                    }`}
+                    placeholder="Tên của bạn"
+                    className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2 ${darkMode ? "bg-[#302E30] text-white focus:border-white" : "bg-gray-100 text-black focus:border-black"}`}
                   />
                   <ErrorMessage name="lastName" component="div" className="text-red-500 text-xs" />
                 </div>
                 <Field
                   name="email"
                   type="email"
-                  placeholder="Enter your email"
-                  className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2 ${
-                    darkMode
-                      ? "bg-[#302E30] text-white focus:border-white"
-                      : "bg-gray-100 text-black focus:border-black"
-                  }`}
+                  placeholder="Nhập email của bạn"
+                  className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2 ${darkMode ? "bg-[#302E30] text-white focus:border-white" : "bg-gray-100 text-black focus:border-black"}`}
                 />
                 <ErrorMessage name="email" component="div" className="text-red-500 text-xs" />
 
                 <Field
                   name="phone"
                   type="tel"
-                  placeholder="Enter your phone"
-                  className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2 ${
-                    darkMode
-                      ? "bg-[#302E30] text-white focus:border-white"
-                      : "bg-gray-100 text-black focus:border-black"
-                  }`}
+                  placeholder="Nhập số điện thoại của bạn"
+                  className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2 ${darkMode ? "bg-[#302E30] text-white focus:border-white" : "bg-gray-100 text-black focus:border-black"}`}
                 />
                 <ErrorMessage name="phone" component="div" className="text-red-500 text-xs" />
 
@@ -136,41 +174,15 @@ const Register = () => {
                   <Field
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                    className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2 ${
-                      darkMode
-                        ? "bg-[#302E30] text-white focus:border-white"
-                        : "bg-gray-100 text-black focus:border-black"
-                    }`}
+                    placeholder="Mật khẩu"
+                    className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2 ${darkMode ? "bg-[#302E30] text-white focus:border-white" : "bg-gray-100 text-black focus:border-black"}`}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-2 flex items-center"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? (
-                      <svg
-                        className="w-5 h-5 text-gray-500"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M17 11.5A4.5 4.5 0 0112.5 16 4.5 4.5 0 017 11.5 4.5 4.5 0 0112.5 7a4.5 4.5 0 015 4.5M2 12s3-6 10-6 10 6 10 6-3 6-10 6S2 12 2 12z" />
-                      </svg>
-                    ) : (
-                      <svg
-                        className="w-5 h-5 text-gray-500"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 16a6 6 0 01-6-6 6 6 0 0112 0 6 6 0 01-6 6zm0-8a2 2 0 00-2 2 2 2 0 004 0 2 2 0 00-2-2z" />
-                      </svg>
-                    )}
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="text-gray-500" />
                   </button>
                 </div>
                 <ErrorMessage name="password" component="div" className="text-red-500 text-xs" />
@@ -179,41 +191,15 @@ const Register = () => {
                   <Field
                     name="confirmPassword"
                     type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Confirm Password"
-                    className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2 ${
-                      darkMode
-                        ? "bg-[#302E30] text-white focus:border-white"
-                        : "bg-gray-100 text-black focus:border-black"
-                    }`}
+                    placeholder="Xác nhận mật khẩu"
+                    className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2 ${darkMode ? "bg-[#302E30] text-white focus:border-white" : "bg-gray-100 text-black focus:border-black"}`}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-2 flex items-center"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
-                    {showConfirmPassword ? (
-                      <svg
-                        className="w-5 h-5 text-gray-500"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M17 11.5A4.5 4.5 0 0112.5 16 4.5 4.5 0 017 11.5 4.5 4.5 0 0112.5 7a4.5 4.5 0 015 4.5M2 12s3-6 10-6 10 6 10 6-3 6-10 6S2 12 2 12z" />
-                      </svg>
-                    ) : (
-                      <svg
-                        className="w-5 h-5 text-gray-500"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 16a6 6 0 01-6-6 6 6 0 0112 0 6 6 0 01-6 6zm0-8a2 2 0 00-2 2 2 2 0 004 0 2 2 0 00-2-2z" />
-                      </svg>
-                    )}
+                    <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} className="text-gray-500" />
                   </button>
                 </div>
                 <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-xs" />
@@ -221,28 +207,15 @@ const Register = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="mt-5 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-full py-4 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  className={`w-full px-5 py-3 rounded-lg font-semibold text-white bg-green-600 hover:bg-green-700 disabled:bg-gray-400`}
                 >
-                  <svg
-                    className="w-6 h-6 -ml-2"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                    <circle cx="8.5" cy="7" r="4" />
-                    <path d="M20 8v6M23 11h-6" />
-                  </svg>
-                  <span className="ml-3">Register</span>
+                  {isSubmitting ? 'Đang xử lý...' : 'Đăng ký'}
                 </button>
-                <p className="mt-6 text-xs text-gray-600 text-center">
-                  Already have an account?{" "}
-                  <Link to="/coffee/login">
-                    <span className="text-[#E9522C] font-semibold">Login</span>
-                  </Link>
-                </p>
+                <div className="text-center">
+                  <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                    Đã có tài khoản? <Link to="/coffee/login" className="text-blue-600 hover:underline">Đăng nhập</Link>
+                  </p>
+                </div>
               </Form>
             )}
           </Formik>

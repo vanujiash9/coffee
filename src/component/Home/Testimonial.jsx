@@ -37,7 +37,7 @@ const Testimonial = () => {
     speed: 500,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 3000,  // Change slides every 3 seconds
     cssEase: "linear",
     pauseOnHover: true,
     pauseOnFocus: true,
