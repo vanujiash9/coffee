@@ -31,18 +31,17 @@ const ProductDetail = () => {
 
   useEffect(() => {
     const menuItems = [
-        { img: imn7, title: "Espresso", price: "150.000 VNĐ", id: 1, stock: 10, discount: false, description: "Một tách espresso đậm đà và mạnh mẽ, lý tưởng cho những ai yêu thích sự mạnh mẽ và sự phong phú trong mỗi ngụm.", rating: 5 },
-        { img: imn2, title: "Latte", price: "180.000 VNĐ", id: 2, stock: 5, discount: true, originalPrice: "200.000 VNĐ", description: "Sự kết hợp mượt mà giữa espresso và sữa hơi, được phủ một lớp bọt nhẹ nhàng. Hoàn hảo cho những ai yêu thích một trải nghiệm cà phê mềm mại và nhẹ nhàng.", rating: 4 },
-        { img: imn3, title: "Cappuccino", price: "200.000 VNĐ", id: 3, stock: 8, discount: false, description: "Espresso đậm đà kết hợp với lớp bọt mịn, mang đến hương vị cân bằng với kết cấu bọt nhẹ nhàng. Một lựa chọn cổ điển với lý do rõ ràng.", rating: 4 },
-        { img: imn1, title: "Americano", price: "170.000 VNĐ", id: 4, stock: 12, discount: false, description: "Đậm đà và mượt mà, Americano của chúng tôi là lựa chọn đơn giản nhưng thỏa mãn cho những ai yêu thích hương vị thuần khiết của espresso pha loãng với nước nóng.", rating: 5 },
-        { img: imn5, title: "Macchiato", price: "190.000 VNĐ", id: 5, stock: 7, discount: true, originalPrice: "210.000 VNĐ", description: "Một tách espresso mạnh mẽ với một chút sữa hơi, mang đến hương vị đậm đà với một chút kem.", rating: 4 },
-        { img: imn9, title: "Mocha", price: "220.000 VNĐ", id: 6, stock: 4, discount: false, description: "Hòa quyện giữa sô cô la đậm đặc và espresso, được phủ lên lớp kem tươi. Hoàn hảo cho những ai yêu thích một trải nghiệm cà phê ngọt ngào và indulgent.", rating: 5 },
-        { img: imn6, title: "Flat White", price: "210.000 VNĐ", id: 7, stock: 6, discount: false, description: "Cà phê mượt mà được làm từ một shot espresso kép và lớp bọt sữa mịn màng. Một lựa chọn yêu thích cho những ai muốn thưởng thức một tách cà phê mạnh mẽ nhưng mềm mại.", rating: 4 },
-        { img: imn4, title: "Affogato", price: "250.000 VNĐ", id: 8, stock: 3, discount: true, originalPrice: "270.000 VNĐ", description: "Một món cà phê kiểu tráng miệng với một shot espresso rưới lên một viên kem vani mịn màng. Sự kết hợp hoàn hảo giữa nóng và lạnh, cà phê và ngọt ngào.", rating: 5 },
-        { img: imn8, title: "Irish Coffee", price: "280.000 VNĐ", id: 9, stock: 2, discount: false, description: "Một sự kết hợp tinh tế giữa cà phê, whiskey Ireland và lớp kem tươi trên cùng. Hoàn hảo cho những ai muốn thưởng thức một món cà phê có hương vị đặc biệt.", rating: 5 },
-      ];
-      
-
+      { img: imn7, title: "Espresso", price: "150000", id: 1, stock: 10, discount: false, description: "Một tách espresso đậm đà và mạnh mẽ...", rating: 5 },
+      { img: imn2, title: "Latte", price: "180000", id: 2, stock: 5, discount: true, originalPrice: "200000", description: "Sự kết hợp mượt mà giữa espresso và sữa hơi...", rating: 4 },
+      { img: imn3, title: "Cappuccino", price: "200000", id: 3, stock: 8, discount: false, description: "Hương vị cappuccino cổ điển với lớp bọt sữa dày...", rating: 4 },
+      { img: imn1, title: "Americano", price: "170000", id: 4, stock: 12, discount: true, originalPrice: "190000", description: "Một ly americano đậm đà với hương vị mạnh mẽ...", rating: 5 },
+      { img: imn5, title: "Mocha", price: "220000", id: 5, stock: 7, discount: false, description: "Sự kết hợp tuyệt vời giữa cà phê espresso và sô cô la...", rating: 4 },
+      { img: imn9, title: "Macchiato", price: "160000", id: 6, stock: 6, discount: true, originalPrice: "180000", description: "Cà phê espresso với một lớp bọt sữa nhẹ...", rating: 3 },
+      { img: imn6, title: "Flat White", price: "190000", id: 7, stock: 5, discount: false, description: "Cà phê espresso với lớp sữa hơi tạo ra sự mịn màng...", rating: 5 },
+      { img: imn4, title: "Affogato", price: "210000", id: 8, stock: 4, discount: true, originalPrice: "230000", description: "Cà phê espresso đổ lên trên kem vani thơm ngon...", rating: 4 },
+      { img: imn8, title: "Cold Brew", price: "180000", id: 9, stock: 8, discount: false, description: "Cà phê lạnh chiết xuất chậm với hương vị tinh tế...", rating: 5 },
+    ];
+    
     const foundProduct = menuItems.find((item) => item.id === parseInt(id));
     if (foundProduct) {
       setProduct(foundProduct);
@@ -67,93 +66,91 @@ const ProductDetail = () => {
   };
 
   const addToCart = () => {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existingProductIndex = cart.findIndex((item) => item.id === product.id);
-    if (existingProductIndex > -1) {
-      cart[existingProductIndex].quantity += quantity;
+    const item = {
+      img: product.img,
+      title: product.title,
+      price: (product.price), // Làm tròn giá tiền đến số nguyên
+      id: product.id,
+      quantity: quantity,
+    };
+  
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
+  
+    if (existingItemIndex > -1) {
+      cart[existingItemIndex].quantity += item.quantity;
     } else {
-      cart.push({ ...product, quantity });
+      cart.push(item);
     }
+  
     localStorage.setItem("cart", JSON.stringify(cart));
-    
-    Swal.fire({
-      icon: "success",
-      title: "Thành công",
-      text: `${product.title} đã được thêm vào giỏ hàng với số lượng ${quantity}.`,
-      confirmButtonText: "OK",
-    });
   };
 
-  const buyNow = () => {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existingProductIndex = cart.findIndex((item) => item.id === product.id);
-    if (existingProductIndex > -1) {
-      cart[existingProductIndex].quantity += quantity;
-    } else {
-      cart.push({ ...product, quantity });
+  const handleAddToCart = () => {
+    try {
+      addToCart();
+      Swal.fire({
+        title: "Added to Cart",
+        text: "Product has been added to your cart successfully!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "An error occurred while adding the item to the cart.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      console.error("Error handling cart:", error);
     }
-    localStorage.setItem("cart", JSON.stringify(cart));
-    navigate('/coffee/checkout2');
   };
 
+  const handleBuyNow = () => {
+    if (!product) return;
+  
+    const item = {
+      img: product.img,
+      title: product.title,
+      price: parseFloat(product.price).toFixed(0), // Làm tròn giá tiền đến số nguyên
+      id: product.id,
+      quantity: quantity,
+    };
+  
+    localStorage.setItem("buyNowCart", JSON.stringify([item]));
+    navigate("/coffee/checkout2");
+  };
+  
   return (
     <div className="flex flex-col items-center p-5 min-h-screen bg-gray-100">
-      {/* Product Image */}
       <img src={productImages[product.id]} alt={product.title} className="w-full max-w-lg rounded-lg shadow-lg border border-gray-300" />
-
-      {/* Product Info */}
       <div className="text-center mt-5">
         <h1 className="text-4xl font-bold mb-2 text-gray-800">{product.title}</h1>
-        <p className="text-2xl text-green-600 mb-2 font-semibold">{product.price}</p>
+        <p className="text-2xl text-green-600 mb-2 font-semibold">
+          {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(parseFloat(product.price))}
+        </p>
         {product.discount && (
-          <p className="text-lg text-red-500 line-through">{product.originalPrice}</p>
+          <p className="text-lg text-red-500 line-through">
+            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(parseFloat(product.originalPrice))}
+          </p>
         )}
         <p className="text-gray-700 mt-2">{product.description}</p>
         <div className="flex items-center justify-center mt-4">
           {[...Array(product.rating)].map((_, i) => (
             <svg key={i} className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 17.27L18.18 21 16.54 13.97 22 9.24 14.81 8.63 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21 12 17.27z" />
+              <path d="M12 17.27L18.18 21 16.54 13.97 22 9.24 14.81 8.63 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21z" />
             </svg>
           ))}
         </div>
-      </div>
-
-      {/* Quantity Selector */}
-      <div className="flex items-center justify-center mt-6">
-        <button
-          onClick={handleDecrease}
-          className="bg-gray-300 p-2 rounded-l-lg text-xl font-semibold hover:bg-gray-400 transition-colors"
-        >
-          -
-        </button>
-        <input
-          type="number"
-          value={quantity}
-          readOnly
-          className="w-16 text-center border border-gray-300 rounded-md"
-        />
-        <button
-          onClick={handleIncrease}
-          className="bg-gray-300 p-2 rounded-r-lg text-xl font-semibold hover:bg-gray-400 transition-colors"
-        >
-          +
-        </button>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex gap-4 mt-6">
-        <button
-          onClick={addToCart}
-          className="bg-blue-600 text-white py-2 px-6 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
-        >
-          Add to Cart
-        </button>
-        <button
-          onClick={buyNow}
-          className="bg-green-600 text-white py-2 px-6 rounded-full shadow-lg hover:bg-green-700 transition-colors"
-        >
-          Buy Now
-        </button>
+        <div className="flex items-center justify-center mt-4">
+          <button onClick={handleDecrease} className="bg-gray-200 p-2 rounded-l">-</button>
+          <span className="px-4 py-2 border-t border-b border-gray-300">{quantity}</span>
+          <button onClick={handleIncrease} className="bg-gray-200 p-2 rounded-r">+</button>
+        </div>
+        <div className="flex space-x-4 mt-4">
+          <button onClick={handleAddToCart} className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">Thêm vào giỏ hàng</button>
+          <button onClick={handleBuyNow} className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600">Mua ngay</button>
+        </div>
       </div>
     </div>
   );

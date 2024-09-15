@@ -1,14 +1,37 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
-const MenuCart = ({ img, title, price, id, addToCart }) => {
+const MenuCart = ({ img, title, price, id}) => {
   const [isFavorited, setIsFavorited] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleAddToCart = () => {
+    // Clean the price string by removing non-numeric characters except the decimal point
+    const cleanedPrice = parseFloat(1000*price.replace(/[^0-9.]/g, "")); 
+  
+    const item = {
+      img,
+      title,
+      price: cleanedPrice, // Use the cleaned price
+      id,
+      quantity: 1, // Default quantity of 1
+    };
+  
     try {
-      addToCart(); // Call the addToCart function passed as a prop
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
+  
+      if (existingItemIndex > -1) {
+        // Item already in cart, update quantity
+        cart[existingItemIndex].quantity += item.quantity;
+      } else {
+        // New item, add to cart
+        cart.push(item);
+      }
+  
+      localStorage.setItem("cart", JSON.stringify(cart));
       Swal.fire({
         title: "Added to Cart",
         text: "Product has been added to your cart successfully!",
@@ -25,6 +48,7 @@ const MenuCart = ({ img, title, price, id, addToCart }) => {
       console.error("Error handling cart:", error);
     }
   };
+  
 
   const handleAddToFavorites = (e) => {
     e.stopPropagation();
@@ -62,15 +86,20 @@ const MenuCart = ({ img, title, price, id, addToCart }) => {
     }
   };
 
+  const handleBuyNow = () => {
+    const item = { img, title, price: parseFloat(price.replace(/[^0-9.]/g, "")), id, quantity: 1 };
+    localStorage.setItem("buyNowCart", JSON.stringify([item]));
+    navigate("/coffee/checkout2"); // Navigate to the checkout2 page
+  };
+
   return (
     <div className="w-full lg:w-1/4 p-5 shadow-md rounded-lg flex flex-col items-center relative">
-      <Link to={`/coffee/productdetail/${id}`}> {/* Wrap the image with a Link */}
-        <img
-          src={img}
-          alt={title}
-          className="w-full h-25 rounded-xl object-cover mb-4 cursor-pointer"
-        />
-      </Link>
+      <img
+        src={img}
+        alt={title}
+        className="w-full h-25 rounded-xl object-cover mb-4 cursor-pointer"
+        onClick={() => navigate(`/coffee/productdetail/${id}`)} // Navigate to product detail
+      />
       <button
         className={`absolute top-2 right-2 text-2xl ${isFavorited ? "text-red-500" : "text-gray-500"}`}
         onClick={handleAddToFavorites}
@@ -109,7 +138,7 @@ const MenuCart = ({ img, title, price, id, addToCart }) => {
           className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 flex items-center justify-center"
           onClick={(e) => {
             e.stopPropagation();
-            handleAddToCart(); // You might want to adjust this if you have a specific buy now function
+            handleBuyNow(); // Call handleBuyNow function
           }}
         >
           Buy Now

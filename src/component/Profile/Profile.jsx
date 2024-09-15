@@ -1,5 +1,8 @@
 import { useState } from "react";
 import FavoritesSection from "./favorite";
+import OrderHistory from "../Cart/OrderHistory";
+import MK from "./MK";
+import ĐMK from "./ĐMK";
 
 const Profile = () => {
   const [activeSection, setActiveSection] = useState("profile"); // Thay đổi phần nội dung hiển thị
@@ -448,132 +451,15 @@ const Profile = () => {
         )}
 
         {activeSection === "notifications" && (
-          <div className="bg-white p-6 rounded-lg shadow-md mb-4">
-            <h2 className="text-2xl font-semibold mb-4">Thông báo</h2>
-            <div className="notification-container">
-              <div className="notification bg-yellow-100 p-4 rounded-lg mb-2">
-                <p className="font-bold">Thông báo 1:</p>
-                <p className="text-sm">Đơn hàng của bạn đã được xác nhận.</p>
-                <span className="text-xs text-gray-500">9:30 AM</span>
-              </div>
-              <div className="notification bg-yellow-100 p-4 rounded-lg mb-2">
-                <p className="font-bold">Thông báo 2:</p>
-                <p className="text-sm">
-                  Bạn có một tin nhắn mới từ hỗ trợ khách hàng.
-                </p>
-                <span className="text-xs text-gray-500">9:15 AM</span>
-              </div>
-              <div className="notification bg-yellow-100 p-4 rounded-lg mb-2">
-                <p className="font-bold">Thông báo 3:</p>
-                <p className="text-sm">
-                  Cập nhật: Chính sách bảo mật đã thay đổi.
-                </p>
-                <span className="text-xs text-gray-500">8:45 AM</span>
-              </div>
-            </div>
-          </div>
+          <MK/>
         )}
 
-        {activeSection === "orders" && (
-          <div className="bg-white p-6 rounded-lg shadow-md mb-4">
-            <h2 className="text-2xl font-semibold mb-4">Đơn hàng của tôi</h2>
-
-            {/* Giao diện đơn hàng */}
-            <div className="order-list">
-              {/* Đơn hàng 1 */}
-              <div className="order bg-gray-100 p-4 rounded-lg mb-4">
-                <div className="flex justify-between items-center mb-2">
-                  <p className="font-bold">Mã đơn hàng: #123456</p>
-                  <p className="text-green-500">Trạng thái: Đã giao</p>
-                </div>
-                <p>Ngày đặt hàng: 12/09/2024</p>
-                <p>Số tiền: 1.200.000 VND</p>
-              </div>
-
-              {/* Đơn hàng 2 */}
-              <div className="order bg-gray-100 p-4 rounded-lg mb-4">
-                <div className="flex justify-between items-center mb-2">
-                  <p className="font-bold">Mã đơn hàng: #654321</p>
-                  <p className="text-yellow-500">Trạng thái: Đang giao</p>
-                </div>
-                <p>Ngày đặt hàng: 10/09/2024</p>
-                <p>Số tiền: 850.000 VND</p>
-              </div>
-
-              {/* Đơn hàng 3 */}
-              <div className="order bg-gray-100 p-4 rounded-lg mb-4">
-                <div className="flex justify-between items-center mb-2">
-                  <p className="font-bold">Mã đơn hàng: #789012</p>
-                  <p className="text-red-500">Trạng thái: Đã hủy</p>
-                </div>
-                <p>Ngày đặt hàng: 08/09/2024</p>
-                <p>Số tiền: 2.500.000 VND</p>
-              </div>
-            </div>
-          </div>
-        )}
+        {activeSection === "orders" && <OrderHistory />}
 
         {activeSection === "favorites" && <FavoritesSection />}
 
         {activeSection === "changePassword" && (
-          <div className="bg-white p-6 rounded-lg shadow-md mb-4">
-            <h2 className="text-2xl font-semibold mb-4">Đổi mật khẩu</h2>
-
-            {/* Giao diện đổi mật khẩu */}
-            <form>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="oldPassword"
-                >
-                  Mật khẩu cũ
-                </label>
-                <input
-                  type="password"
-                  id="oldPassword"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="Nhập mật khẩu cũ"
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="newPassword"
-                >
-                  Mật khẩu mới
-                </label>
-                <input
-                  type="password"
-                  id="newPassword"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="Nhập mật khẩu mới"
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="confirmPassword"
-                >
-                  Xác nhận mật khẩu mới
-                </label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="Xác nhận mật khẩu mới"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                Đổi mật khẩu
-              </button>
-            </form>
-          </div>
+          <ĐMK/>
         )}
       </div>
     </div>

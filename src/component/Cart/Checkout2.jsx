@@ -49,7 +49,7 @@ const Checkout2 = () => {
         });
         return;
       }
-
+  
       if (!validatePhone(phone)) {
         Swal.fire({
           title: "Số điện thoại không hợp lệ",
@@ -59,7 +59,25 @@ const Checkout2 = () => {
         });
         return;
       }
-
+  
+      // Create order object
+      const order = {
+        id: Date.now(), // Unique ID for the order
+        date: new Date().toLocaleDateString(),
+        total: `${finalPrice} VNĐ`,
+        status: 'Đã thanh toán',
+        items: cartItems,
+        customer: { name, address, phone, email },
+        note,
+      };
+  
+      // Get existing orders from localStorage
+      const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+      // Add the new order to existing orders
+      existingOrders.push(order);
+      // Save updated orders back to localStorage
+      localStorage.setItem("orders", JSON.stringify(existingOrders));
+  
       Swal.fire({
         title: "Thanh toán thành công!",
         text: "Cảm ơn bạn đã mua sắm tại cửa hàng của chúng tôi.",
@@ -78,6 +96,7 @@ const Checkout2 = () => {
       });
     }
   };
+  
 
   const discount = 28000;
   const shipping = 8000;
@@ -102,7 +121,7 @@ const Checkout2 = () => {
                     <p className="text-gray-600">Số lượng: {item.quantity}</p>
                   </div>
                 </div>
-                <p className="font-semibold">{item.price} VNĐ</p>
+                <p className="font-semibold">{item.price*1000} VNĐ</p>
               </div>
             ))}
             <div className="flex justify-between mt-4 text-lg font-semibold">

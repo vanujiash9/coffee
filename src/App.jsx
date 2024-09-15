@@ -23,6 +23,7 @@ import AdminDashboard from "./component/Profile/Admin";
 import Checkout from "./component/Cart/Checkout";
 import Checkout2 from "./component/Cart/Checkout2";
 import ProductDetail from "./component/menu/ProductPage";
+import OrderHistory from "./component/Cart/OrderHistory";
 
 const App = () => {
   useEffect(() => {
@@ -58,9 +59,9 @@ const App = () => {
             <Route path="login" element={<Login />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="checkout2" element={<Checkout2 />} />
-            {/* Cập nhật route cho ProductDetail */}
-   
+            <Route path="orderhistory" element={<OrderHistory />} />
             <Route path="productdetail/:id" element={<ProductDetail />} />
+           
           </Route>
         </Routes>
       </div>

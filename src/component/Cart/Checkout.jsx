@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -23,7 +23,7 @@ const Checkout = () => {
   });
   const [, setPaymentMethod] = useState("Cash on Delivery");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("Cash on Delivery");
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -116,6 +116,26 @@ const Checkout = () => {
 
   const handlePayment = () => {
     if (customerInfo.name && customerInfo.address && customerInfo.phone && customerInfo.email) {
+      const order = {
+        id: Date.now(), // Unique identifier for the order
+        date: new Date().toLocaleDateString(),
+        status: "Đã thanh toán", // Payment status
+        total: finalPrice.toLocaleString(), // Total price
+        items: cartItems, // Save cart items with order
+        note: note, // Save note with order
+        paymentMethod: selectedPaymentMethod, // Save payment method with order
+        customerInfo: customerInfo // Save customer info with order
+      };
+
+      // Get existing orders from local storage
+      const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+
+      // Add new order to the list
+      existingOrders.push(order);
+
+      // Save updated orders to local storage
+      localStorage.setItem("orders", JSON.stringify(existingOrders));
+
       Swal.fire({
         title: "Thanh toán thành công!",
         text: "Cảm ơn bạn đã mua sắm tại cửa hàng của chúng tôi.",
@@ -137,7 +157,7 @@ const Checkout = () => {
 
   const discount = 28000;
   const shipping = 8000;
-  const finalPrice = totalPrice * 1000 - discount + shipping;
+  const finalPrice = totalPrice - discount + shipping;
 
   return (
     <div className="container mx-auto p-6">
@@ -167,7 +187,7 @@ const Checkout = () => {
                   </div>
                   <div className="text-right flex flex-col items-end">
                     <p className="text-lg font-semibold">
-                      {(item.price * item.quantity * 1000).toLocaleString()} VNĐ
+                      {(item.price * item.quantity ).toLocaleString()} VNĐ
                     </p>
                     <div className="flex items-center space-x-2 mt-2">
                       <button
@@ -187,7 +207,7 @@ const Checkout = () => {
             <h2 className="text-xl font-semibold mb-4">Tóm tắt đơn hàng</h2>
             <div className="flex justify-between mb-2">
               <p>Tổng cộng</p>
-              <p>{(totalPrice * 1000).toLocaleString()} VNĐ</p>
+              <p>{(totalPrice ).toLocaleString()} VNĐ</p>
             </div>
             <div className="flex justify-between mb-2">
               <p>
@@ -205,137 +225,155 @@ const Checkout = () => {
               <p>{finalPrice.toLocaleString()} VNĐ</p>
             </div>
           </div>
-        </div>
-
-        <div className="xl:w-1/3">
-          <div className="bg-gray-100 p-6 mb-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-4">Thông tin khách hàng</h2>
-            {isEditing ? (
-              <>
-                <div className="mb-4">
-                  <label className="block text-gray-700">Tên:</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={customerInfo.name}
-                    onChange={handleCustomerInfoChange}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700">Địa chỉ:</label>
-                  <input
-                    type="text"
-                    name="address"
-                    value={customerInfo.address}
-                    onChange={handleCustomerInfoChange}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700">Số điện thoại:</label>
-                  <input
-                    type="text"
-                    name="phone"
-                    value={customerInfo.phone}
-                    onChange={handleCustomerInfoChange}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700">Email:</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={customerInfo.email}
-                    onChange={handleCustomerInfoChange}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <button
-                  onClick={handleCustomerInfoSave}
-                  className="bg-blue-500 text-white px-4 py-2 rounded"
-                >
-                  Lưu
-                </button>
-              </>
-            ) : (
-              <div className="flex items-center mb-4">
-                <img
-                  src={customerInfo.avatar}
-                  alt="Avatar"
-                  className="w-16 h-16 object-cover rounded-full mr-4"
-                />
-                <div>
-                  <p className="font-semibold">{customerInfo.name}</p>
-                  <p>{customerInfo.address}</p>
-                  <p>{customerInfo.phone}</p>
-                  <p>{customerInfo.email}</p>
-                </div>
-              </div>
-            )}
-            <button
-              onClick={() => setIsEditing(!isEditing)}
-              className="bg-green-500 text-white px-4 py-2 rounded"
-            >
-              {isEditing ? "Hủy" : "Chỉnh sửa"}
-            </button>
-          </div>
 
           <div className="bg-gray-100 p-6 mb-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">Ghi chú</h2>
             <textarea
+              className="w-full p-4 border rounded-md"
+              rows="4"
               value={note}
               onChange={handleNoteChange}
-              rows="4"
-              className="w-full p-2 border rounded"
-              placeholder="Nhập ghi chú của bạn tại đây..."
             />
             <button
+              className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
               onClick={handleNoteSubmit}
-              className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
             >
               Gửi ghi chú
             </button>
-            <h3 className="text-lg font-semibold mt-4 mb-2">Gợi ý ghi chú</h3>
-            <div className="space-y-2">
-              {noteSuggestions.map((suggestion, index) => (
+            <div className="mt-4">
+              <h3 className="text-lg font-semibold mb-2">Gợi ý ghi chú:</h3>
+              <div className="flex flex-wrap space-x-2">
+                {noteSuggestions.map((suggestion, index) => (
+                  <button
+                    key={index}
+                    className="bg-gray-200 px-3 py-1 rounded text-sm"
+                    onClick={() => handleSuggestionClick(suggestion)}
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="xl:w-1/3">
+          <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold mb-4">Thông tin khách hàng</h2>
+            {isEditing ? (
+              <>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-1">Tên</label>
+                  <input
+                    type="text"
+                    name="name"
+                    className="w-full p-2 border rounded-md"
+                    value={customerInfo.name}
+                    onChange={handleCustomerInfoChange}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-1">Địa chỉ</label>
+                  <input
+                    type="text"
+                    name="address"
+                    className="w-full p-2 border rounded-md"
+                    value={customerInfo.address}
+                    onChange={handleCustomerInfoChange}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-1">Số điện thoại</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    className="w-full p-2 border rounded-md"
+                    value={customerInfo.phone}
+                    onChange={handleCustomerInfoChange}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-1">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    className="w-full p-2 border rounded-md"
+                    value={customerInfo.email}
+                    onChange={handleCustomerInfoChange}
+                  />
+                </div>
                 <button
-                  key={index}
-                  onClick={() => handleSuggestionClick(suggestion)}
-                  className="block text-blue-500"
+                  className="bg-green-500 text-white px-4 py-2 rounded"
+                  onClick={handleCustomerInfoSave}
                 >
-                  {suggestion}
+                  Lưu thông tin
                 </button>
-              ))}
+              </>
+            ) : (
+              <>
+                <div className="flex items-center mb-4">
+                  <img
+                    src={customerInfo.avatar}
+                    alt="Avatar"
+                    className="w-16 h-16 rounded-full mr-4"
+                  />
+                  <div>
+                    <h3 className="text-lg font-semibold">{customerInfo.name}</h3>
+                    <p className="text-sm">{customerInfo.address}</p>
+                    <p className="text-sm">{customerInfo.phone}</p>
+                    <p className="text-sm">{customerInfo.email}</p>
+                  </div>
+                </div>
+                <button
+                  className="bg-yellow-500 text-white px-4 py-2 rounded"
+                  onClick={() => setIsEditing(true)}
+                >
+                  Chỉnh sửa thông tin
+                </button>
+              </>
+            )}
+          </div>
+
+          <div className="bg-gray-100 p-6 rounded-lg shadow-md mt-6">
+            <h2 className="text-xl font-semibold mb-4">Phương thức thanh toán</h2>
+            <div>
+              <label className="inline-flex items-center mr-4">
+                <input
+                  type="radio"
+                  value="Cash on Delivery"
+                  checked={selectedPaymentMethod === "Cash on Delivery"}
+                  onChange={handlePaymentMethodChange}
+                  className="form-radio"
+                />
+                <span className="ml-2">Thanh toán khi nhận hàng</span>
+              </label>
+              <label className="inline-flex items-center">
+                <input
+                  type="radio"
+                  value="Credit Card"
+                  checked={selectedPaymentMethod === "Credit Card"}
+                  onChange={handlePaymentMethodChange}
+                  className="form-radio"
+                />
+                <span className="ml-2">Thẻ tín dụng</span>
+              </label>
+              <button
+                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+                onClick={handlePaymentMethodConfirm}
+              >
+                Xác nhận phương thức thanh toán
+              </button>
             </div>
           </div>
 
-          <div className="bg-gray-100 p-6 mb-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-4">Phương thức thanh toán</h2>
-            <select
-              value={selectedPaymentMethod}
-              onChange={handlePaymentMethodChange}
-              className="w-full p-2 border rounded"
-            >
-              <option value="Cash on Delivery">Thanh toán khi nhận hàng</option>
-              <option value="Credit Card">Thẻ tín dụng</option>
-              <option value="Bank Transfer">Chuyển khoản ngân hàng</option>
-            </select>
+          <div className="mt-6 text-center">
             <button
-              onClick={handlePaymentMethodConfirm}
-              className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
+              className="bg-green-500 text-white px-6 py-3 rounded-lg"
+              onClick={handlePayment}
             >
-              Xác nhận
+              Hoàn tất thanh toán
             </button>
           </div>
-
-          <button
-            onClick={handlePayment}
-            className="bg-green-500 text-white px-6 py-3 rounded-lg w-full mt-6"
-          >
-            Hoàn tất thanh toán
-          </button>
         </div>
       </div>
     </div>

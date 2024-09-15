@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../assets/website/coffee_logo.png";
-import {  FaShoppingCart, FaUser, FaSearch, FaSignOutAlt } from "react-icons/fa";
+import { FaShoppingCart, FaUser, FaSearch, FaSignOutAlt } from "react-icons/fa";
 import './header.css'; // Import the updated CSS file
 
 const Menus = [
@@ -41,10 +41,10 @@ const Header = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [cartQuantity, setCartQuantity] = useState(0);
   const [userFullName, setUserFullName] = useState(null);
-  const navigate = useNavigate(); // Hook to navigate programmatically
+  const navigate = useNavigate(); 
 
   useEffect(() => {
-    // Lấy số lượng giỏ hàng từ localStorage
+    // Fetch cart quantity from localStorage
     const fetchCartQuantity = () => {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
       const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -55,17 +55,14 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    // Lấy thông tin người dùng từ localStorage
-    const fetchUserData = () => {
-      const fullName = localStorage.getItem("userFullName");
-      if (fullName) {
-        setUserFullName(fullName);
-      } else {
-        setUserFullName(null); // Không có người dùng
-      }
-    };
+    // Retrieve user data from localStorage
+    const user = JSON.parse(localStorage.getItem("user"));
 
-    fetchUserData();
+    if (user && user.firstName && user.lastName) {
+      setUserFullName(`${user.firstName} ${user.lastName}`);
+    } else {
+      setUserFullName(null);
+    }
   }, []);
 
   const handleSearchChange = (e) => {
@@ -84,9 +81,9 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("userFullName");
+    localStorage.removeItem("user");
     setUserFullName(null);
-    navigate('/coffee/register'); // Chuyển hướng tới trang đăng ký
+    navigate('/coffee/register');
     alert("Đăng xuất thành công!");
   };
 
@@ -161,7 +158,7 @@ const Header = () => {
         </div>
 
         {/* Profile, Login, and Cart buttons */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6 relative">
           {userFullName ? (
             <>
               {/* User Profile with Avatar */}
@@ -182,28 +179,33 @@ const Header = () => {
                   <FaSignOutAlt className="text-lg" />
                   <span className="button-text">Đăng xuất</span>
                 </button>
+
+                {/* Cart Button */}
+                <NavLink
+                  to="/coffee/cart"
+                  className="cart-button flex items-center gap-2 text-gray-600 hover:text-gray-900 relative"
+                >
+                  <FaShoppingCart className="text-lg" />
+                  {cartQuantity > 0 && (
+                    <span className="cart-quantity bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute top-0 right-0 translate-x-1/2 -translate-y-1/2">
+                      {cartQuantity}
+                    </span>
+                  )}
+                </NavLink>
               </div>
             </>
           ) : (
             <>
-              {/* Register Button */}
+              {/* Login Button */}
               <NavLink
-                to="/coffee/register"
-                className="register-button flex items-center gap-2 text-gray-600 hover:text-gray-900"
+                to="/coffee/login"
+                className="login-button flex items-center gap-2 text-gray-600 hover:text-gray-900"
               >
                 <FaUser className="text-lg" />
-                <span className="button-text">Đăng ký</span>
+                <span className="button-text">Đăng nhập</span>
               </NavLink>
             </>
           )}
-
-          {/* Cart Icon and Quantity */}
-          <div className="relative">
-            <Link to="/coffee/cart" className="cart-link flex items-center gap-2 text-red-600 hover:text-gray-900">
-              <FaShoppingCart className="text-xl" />
-              <span className="cart-quantity text-sm font-bold">{cartQuantity}</span>
-            </Link>
-          </div>
         </div>
       </div>
     </header>

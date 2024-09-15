@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import Swal from 'sweetalert2';  // Add SweetAlert for dialog
 
 const initialState = {
   items: [],
+  notification: null,
+  confirmAction: null, // Flag to handle confirmation actions
 };
 
 const cartSlice = createSlice({
@@ -10,10 +11,17 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const { id, title, price, img } = action.payload;
+      const { id, title, price, img, stock } = action.payload;
       const existingItem = state.items.find(item => item.id === id);
       if (existingItem) {
-        existingItem.quantity += 1;
+        if (existingItem.quantity < stock) {
+          existingItem.quantity += 1;
+        } else {
+          state.notification = {
+            type: 'error',
+            message: 'Số lượng sản phẩm trong kho đã hết',
+          };
+        }
       } else {
         state.items.push({
           id,
@@ -21,47 +29,52 @@ const cartSlice = createSlice({
           price,
           img,
           quantity: 1,
+          stock,
         });
       }
     },
     increase: (state, action) => {
-      const item = state.items.find(item => item.id === action.payload);
+      const item = state.items.find(item => item.id === action.payload.id);
       if (item) {
-        item.quantity += 1;
+        if (item.quantity < item.stock) {
+          item.quantity += 1;
+        } else {
+          state.notification = {
+            type: 'error',
+            message: 'Số lượng sản phẩm trong kho đã hết',
+          };
+        }
       }
     },
     decrease: (state, action) => {
       const item = state.items.find(item => item.id === action.payload);
-
       if (item) {
         if (item.quantity === 1) {
-          // Trigger SweetAlert2 confirmation
-          Swal.fire({
-            title: 'Bạn có chắc muốn xóa sản phẩm này không?',
-            text: "Sản phẩm sẽ được xóa khỏi giỏ hàng!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Xóa',
-            cancelButtonText: 'Hủy'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // If confirmed, remove the item
-              state.items = state.items.filter(item => item.id !== action.payload);
-            }
-          });
+          // Trigger confirmation when attempting to decrease below 1
+          state.confirmAction = {
+            type: 'removeCart',
+            payload: item.id,
+          };
         } else {
+          // Decrease the quantity as usual
           item.quantity -= 1;
         }
       }
     },
+    
     removeCart: (state, action) => {
       state.items = state.items.filter(item => item.id !== action.payload);
+      state.confirmAction = null; // Clear the confirmation action
+    },
+    resetNotification: (state) => {
+      state.notification = null;
+    },
+    resetConfirmAction: (state) => {
+      state.confirmAction = null;
     },
   },
 });
 
-export const { addToCart, increase, decrease, removeCart } = cartSlice.actions;
+export const { addToCart, increase, decrease, removeCart, resetNotification, resetConfirmAction } = cartSlice.actions;
 
 export default cartSlice.reducer;

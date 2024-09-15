@@ -11,11 +11,11 @@ const validationSchema = Yup.object({
 });
 
 // Example login function
-const handleLogin = () => {
-  // Assume login is successful and user data is available
-  const user = { name: 'User Name' };
-  localStorage.setItem('user', JSON.stringify(user));
+const handleLogin = (user) => {
+  localStorage.setItem('userFullName', user.name); // Store full name
+  localStorage.setItem('user', JSON.stringify(user)); // Optional: store more user data if needed
 };
+
 
 const Login = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -27,9 +27,9 @@ const Login = () => {
     const user = users.find(
       (user) => user.email === values.email && user.password === values.password
     );
-
+  
     if (user) {
-      handleLogin(); // Call handleLogin to set user data in localStorage
+      handleLogin(user); // Pass the user object
       Swal.fire({
         icon: 'success',
         title: 'Login successful',
@@ -37,7 +37,7 @@ const Login = () => {
         confirmButtonText: 'OK',
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate('/coffee/home'); // Redirect to a dashboard or home page
+          navigate('/coffee/home');
         }
       });
     } else {
@@ -48,10 +48,10 @@ const Login = () => {
         confirmButtonText: 'OK',
       });
     }
-
+  
     setSubmitting(false);
   };
-
+  
   return (
     <div className={`flex flex-col justify-center items-center w-full h-screen ${darkMode ? 'bg-[#282D2D]' : 'bg-[#F0F0F0]'} px-5`}>
       <div className="flex flex-col items-end justify-start overflow-hidden mb-2 xl:max-w-3xl w-full">
