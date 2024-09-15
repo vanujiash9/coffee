@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../assets/website/coffee_logo.png";
 import { FaShoppingCart, FaUser, FaSearch, FaSignOutAlt } from "react-icons/fa";
-import './header.css'; // Import the updated CSS file
+import "./header.css"; // Import the updated CSS file
 
 const Menus = [
   { id: 1, name: "HOME", link: "/coffee/home" },
@@ -34,14 +34,15 @@ const searchOptions = [
   { id: 20, name: "Điều khoản dịch vụ", link: "/coffee/terms" },
 ];
 
-const defaultAvatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBmunX_Sj-B11U_k7qT2yTI26xBH1TyEo9vQ&s";
+const defaultAvatar =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBmunX_Sj-B11U_k7qT2yTI26xBH1TyEo9vQ&s";
 
 const Header = () => {
   const [search, setSearch] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [cartQuantity, setCartQuantity] = useState(0);
   const [userFullName, setUserFullName] = useState(null);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch cart quantity from localStorage
@@ -83,15 +84,16 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUserFullName(null);
-    navigate('/coffee/register');
+    navigate("/coffee/register");
     alert("Đăng xuất thành công!");
   };
 
-  const filteredSuggestions = search.length > 0
-    ? searchOptions.filter(option =>
-        option.name.toLowerCase().includes(search.toLowerCase())
-      )
-    : searchOptions;
+  const filteredSuggestions =
+    search.length > 0
+      ? searchOptions.filter((option) =>
+          option.name.toLowerCase().includes(search.toLowerCase())
+        )
+      : searchOptions;
 
   return (
     <header className="header bg-gradient-to-r from-white via-gray-100 to-gray-200 text-gray-900 shadow-md">
@@ -167,7 +169,11 @@ const Header = () => {
                   to="/coffee/profile"
                   className="profile-button flex items-center gap-2 text-gray-600 hover:text-gray-900"
                 >
-                  <img src={defaultAvatar} alt="Avatar" className="w-8 h-8 rounded-full" />
+                  <img
+                    src={defaultAvatar}
+                    alt="Avatar"
+                    className="w-8 h-8 rounded-full"
+                  />
                   <span className="button-text">{userFullName}</span>
                 </NavLink>
 

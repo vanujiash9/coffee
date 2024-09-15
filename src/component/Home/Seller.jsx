@@ -4,8 +4,20 @@ import imn2 from "../assets/website/27780fc651dff0eb419b06ecf93a3055.jpg";
 import imn3 from "../assets/website/d191162bab13fb9f788a1dc3334eecf6.jpg";
 
 const bestSellers = [
-  { img: imn2, title: "Latte", originalPrice: "200.000", discountedPrice: "180.000", id: 2 },
-  { img: imn3, title: "Cappuccino", originalPrice: "220.000", discountedPrice: "200.000", id: 3 },
+  {
+    img: imn2,
+    title: "Latte",
+    originalPrice: "200.000",
+    discountedPrice: "180.000",
+    id: 2,
+  },
+  {
+    img: imn3,
+    title: "Cappuccino",
+    originalPrice: "220.000",
+    discountedPrice: "200.000",
+    id: 3,
+  },
   // Add more products here as needed
 ];
 
@@ -15,8 +27,10 @@ const Seller = () => {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     // Check if the product is already in the cart
-    const existingProductIndex = cart.findIndex((item) => item.id === product.id);
-    
+    const existingProductIndex = cart.findIndex(
+      (item) => item.id === product.id
+    );
+
     if (existingProductIndex > -1) {
       // If the product is already in the cart, increment the quantity
       cart[existingProductIndex].quantity += 1;

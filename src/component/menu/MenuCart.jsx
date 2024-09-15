@@ -3,14 +3,14 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
-const MenuCart = ({ img, title, price, id}) => {
+const MenuCart = ({ img, title, price, id }) => {
   const [isFavorited, setIsFavorited] = useState(false);
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleAddToCart = () => {
     // Clean the price string by removing non-numeric characters except the decimal point
-    const cleanedPrice = parseFloat(1000*price.replace(/[^0-9.]/g, "")); 
-  
+    const cleanedPrice = parseFloat(1000 * price.replace(/[^0-9.]/g, ""));
+
     const item = {
       img,
       title,
@@ -18,11 +18,13 @@ const MenuCart = ({ img, title, price, id}) => {
       id,
       quantity: 1, // Default quantity of 1
     };
-  
+
     try {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
-  
+      const existingItemIndex = cart.findIndex(
+        (cartItem) => cartItem.id === item.id
+      );
+
       if (existingItemIndex > -1) {
         // Item already in cart, update quantity
         cart[existingItemIndex].quantity += item.quantity;
@@ -30,7 +32,7 @@ const MenuCart = ({ img, title, price, id}) => {
         // New item, add to cart
         cart.push(item);
       }
-  
+
       localStorage.setItem("cart", JSON.stringify(cart));
       Swal.fire({
         title: "Added to Cart",
@@ -48,7 +50,6 @@ const MenuCart = ({ img, title, price, id}) => {
       console.error("Error handling cart:", error);
     }
   };
-  
 
   const handleAddToFavorites = (e) => {
     e.stopPropagation();
@@ -87,7 +88,13 @@ const MenuCart = ({ img, title, price, id}) => {
   };
 
   const handleBuyNow = () => {
-    const item = { img, title, price: parseFloat(price.replace(/[^0-9.]/g, "")), id, quantity: 1 };
+    const item = {
+      img,
+      title,
+      price: parseFloat(price.replace(/[^0-9.]/g, "")),
+      id,
+      quantity: 1,
+    };
     localStorage.setItem("buyNowCart", JSON.stringify([item]));
     navigate("/coffee/checkout2"); // Navigate to the checkout2 page
   };
@@ -101,7 +108,9 @@ const MenuCart = ({ img, title, price, id}) => {
         onClick={() => navigate(`/coffee/productdetail/${id}`)} // Navigate to product detail
       />
       <button
-        className={`absolute top-2 right-2 text-2xl ${isFavorited ? "text-red-500" : "text-gray-500"}`}
+        className={`absolute top-2 right-2 text-2xl ${
+          isFavorited ? "text-red-500" : "text-gray-500"
+        }`}
         onClick={handleAddToFavorites}
         aria-label={isFavorited ? "Remove from favorites" : "Add to favorites"}
       >

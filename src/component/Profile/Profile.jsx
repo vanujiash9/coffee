@@ -450,17 +450,13 @@ const Profile = () => {
           </div>
         )}
 
-        {activeSection === "notifications" && (
-          <MK/>
-        )}
+        {activeSection === "notifications" && <MK />}
 
         {activeSection === "orders" && <OrderHistory />}
 
         {activeSection === "favorites" && <FavoritesSection />}
 
-        {activeSection === "changePassword" && (
-          <ĐMK/>
-        )}
+        {activeSection === "changePassword" && <ĐMK />}
       </div>
     </div>
   );

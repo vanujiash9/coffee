@@ -19,10 +19,12 @@ const Checkout = () => {
     address: "123 Phố Hòa Bình, Quận 1, TP.HCM",
     phone: "0123-456-789",
     email: "david.kent@example.com",
-    avatar: "https://bazaarvietnam.vn/wp-content/uploads/2022/01/phim-hay-nhat-cua-lee-do-hyun-ldh_sky.jpg",
+    avatar:
+      "https://bazaarvietnam.vn/wp-content/uploads/2022/01/phim-hay-nhat-cua-lee-do-hyun-ldh_sky.jpg",
   });
   const [, setPaymentMethod] = useState("Cash on Delivery");
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("Cash on Delivery");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] =
+    useState("Cash on Delivery");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +34,10 @@ const Checkout = () => {
   }, []);
 
   const updateTotalPrice = (items) => {
-    const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const total = items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
     setTotalPrice(total);
   };
 
@@ -115,7 +120,12 @@ const Checkout = () => {
   };
 
   const handlePayment = () => {
-    if (customerInfo.name && customerInfo.address && customerInfo.phone && customerInfo.email) {
+    if (
+      customerInfo.name &&
+      customerInfo.address &&
+      customerInfo.phone &&
+      customerInfo.email
+    ) {
       const order = {
         id: Date.now(), // Unique identifier for the order
         date: new Date().toLocaleDateString(),
@@ -124,7 +134,7 @@ const Checkout = () => {
         items: cartItems, // Save cart items with order
         note: note, // Save note with order
         paymentMethod: selectedPaymentMethod, // Save payment method with order
-        customerInfo: customerInfo // Save customer info with order
+        customerInfo: customerInfo, // Save customer info with order
       };
 
       // Get existing orders from local storage
@@ -170,7 +180,9 @@ const Checkout = () => {
           <div className="bg-gray-100 p-6 mb-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">Giỏ hàng</h2>
             {cartItems.length === 0 ? (
-              <p className="text-center text-gray-600">Giỏ hàng của bạn đang trống.</p>
+              <p className="text-center text-gray-600">
+                Giỏ hàng của bạn đang trống.
+              </p>
             ) : (
               cartItems.map((item, index) => (
                 <div key={index} className="flex items-center border-b py-4">
@@ -187,7 +199,7 @@ const Checkout = () => {
                   </div>
                   <div className="text-right flex flex-col items-end">
                     <p className="text-lg font-semibold">
-                      {(item.price * item.quantity ).toLocaleString()} VNĐ
+                      {(item.price * item.quantity).toLocaleString()} VNĐ
                     </p>
                     <div className="flex items-center space-x-2 mt-2">
                       <button
@@ -207,7 +219,7 @@ const Checkout = () => {
             <h2 className="text-xl font-semibold mb-4">Tóm tắt đơn hàng</h2>
             <div className="flex justify-between mb-2">
               <p>Tổng cộng</p>
-              <p>{(totalPrice ).toLocaleString()} VNĐ</p>
+              <p>{totalPrice.toLocaleString()} VNĐ</p>
             </div>
             <div className="flex justify-between mb-2">
               <p>
@@ -283,7 +295,9 @@ const Checkout = () => {
                   />
                 </div>
                 <div className="mb-4">
-                  <label className="block text-gray-700 mb-1">Số điện thoại</label>
+                  <label className="block text-gray-700 mb-1">
+                    Số điện thoại
+                  </label>
                   <input
                     type="text"
                     name="phone"
@@ -318,7 +332,9 @@ const Checkout = () => {
                     className="w-16 h-16 rounded-full mr-4"
                   />
                   <div>
-                    <h3 className="text-lg font-semibold">{customerInfo.name}</h3>
+                    <h3 className="text-lg font-semibold">
+                      {customerInfo.name}
+                    </h3>
                     <p className="text-sm">{customerInfo.address}</p>
                     <p className="text-sm">{customerInfo.phone}</p>
                     <p className="text-sm">{customerInfo.email}</p>
@@ -335,7 +351,9 @@ const Checkout = () => {
           </div>
 
           <div className="bg-gray-100 p-6 rounded-lg shadow-md mt-6">
-            <h2 className="text-xl font-semibold mb-4">Phương thức thanh toán</h2>
+            <h2 className="text-xl font-semibold mb-4">
+              Phương thức thanh toán
+            </h2>
             <div>
               <label className="inline-flex items-center mr-4">
                 <input

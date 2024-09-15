@@ -15,13 +15,9 @@ const Navbar = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {/* Text content section */}
           <div className="flex flex-col justify-center gap-6 pt-12 sm:pt-0 text-center sm:text-left order-2 sm:order-1">
-            <div className="flex flex-col justify-center">
-              
-              
-            </div>
+            <div className="flex flex-col justify-center"></div>
           </div>
           {/* Image content section */}
-          
         </div>
       </div>
     </div>

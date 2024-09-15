@@ -1,5 +1,5 @@
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const TestimonialData = [
@@ -37,7 +37,7 @@ const Testimonial = () => {
     speed: 500,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,  // Change slides every 3 seconds
+    autoplaySpeed: 3000, // Change slides every 3 seconds
     cssEase: "linear",
     pauseOnHover: true,
     pauseOnFocus: true,
@@ -71,10 +71,7 @@ const Testimonial = () => {
       <div className="container">
         {/* Header section */}
         <div className="mb-10">
-          <h1
-            data-aos="fade-up"
-            className="text-center text-4xl font-bold "
-          >
+          <h1 data-aos="fade-up" className="text-center text-4xl font-bold ">
             Ý Kiến Khách Hàng
           </h1>
         </div>

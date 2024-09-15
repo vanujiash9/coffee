@@ -24,6 +24,7 @@ import Checkout from "./component/Cart/Checkout";
 import Checkout2 from "./component/Cart/Checkout2";
 import ProductDetail from "./component/menu/ProductPage";
 import OrderHistory from "./component/Cart/OrderHistory";
+import Checkout3 from "./component/Cart/Checkout2.1";
 
 const App = () => {
   useEffect(() => {
@@ -59,9 +60,10 @@ const App = () => {
             <Route path="login" element={<Login />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="checkout2" element={<Checkout2 />} />
+            <Route path="checkout3" element={<Checkout3 />} />
+
             <Route path="orderhistory" element={<OrderHistory />} />
             <Route path="productdetail/:id" element={<ProductDetail />} />
-           
           </Route>
         </Routes>
       </div>

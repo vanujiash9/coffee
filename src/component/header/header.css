@@ -1,226 +1,226 @@
 /* Header styling */
 .header {
-    font-family: 'Poppins', sans-serif;
-    background-color: #ffffff;
-    color: #1a202c;
-    transition: background-color 0.3s, color 0.3s;
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Poppins", sans-serif;
+  background-color: #ffffff;
+  color: #1a202c;
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Dark mode for header */
 .header.dark-mode {
-    background-color: #000000;
-    color: #ffffff;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 /* Logo styling */
 .logo {
-    display: flex;
-    align-items: center;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: inherit;
-    margin-right: 2rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: inherit;
+  margin-right: 2rem;
 }
 
 .logo-image {
-    width: 3rem;
-    height: auto;
+  width: 3rem;
+  height: auto;
 }
 
 .logo-text {
-    font-size: 1.25rem;
-    margin-left: 0.5rem;
-    line-height: 1;
+  font-size: 1.25rem;
+  margin-left: 0.5rem;
+  line-height: 1;
 }
 
 /* Navigation link styling */
 .nav-link {
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: inherit;
-    text-decoration: none;
-    margin: 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: inherit;
+  text-decoration: none;
+  margin: 0 1rem;
 }
 
 .nav-link:hover,
 .nav-link.active {
-    color: #cfcfcf;
-    font-weight: 700;
+  color: #cfcfcf;
+  font-weight: 700;
 }
 
 /* Search input styling */
 .search-container {
-    position: relative;
-    flex-grow: 1;
-    margin: 0 1rem;
+  position: relative;
+  flex-grow: 1;
+  margin: 0 1rem;
 }
 
 .search-input {
-    background-color: #f0f0f0;
-    color: #333;
-    padding: 0.5rem 2.5rem;
-    border-radius: 9999px;
-    width: 100%;
-    font-size: 1rem;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    transition: background-color 0.3s, color 0.3s;
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 0.5rem 2.5rem;
+  border-radius: 9999px;
+  width: 100%;
+  font-size: 1rem;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 /* Search input in dark mode */
 .header.dark-mode .search-input {
-    background-color: #333333;
-    border-color: #444444;
-    color: #ffffff;
+  background-color: #333333;
+  border-color: #444444;
+  color: #ffffff;
 }
 
 /* Search icon styling */
 .search-icon {
-    position: absolute;
-    top: 50%;
-    right: 1rem;
-    transform: translateY(-50%);
-    color: #333;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  color: #333;
 }
 
 .header.dark-mode .search-icon {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 /* Suggestions dropdown styling */
 .suggestion {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    display: block;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  display: block;
 }
 
 .suggestion:hover {
-    background-color: #e2e2e2;
+  background-color: #e2e2e2;
 }
 
 /* Suggestions dropdown in dark mode */
 .header.dark-mode .suggestion {
-    background-color: #444444;
-    color: #ffffff;
+  background-color: #444444;
+  color: #ffffff;
 }
 
 .header.dark-mode .suggestion:hover {
-    background-color: #555555;
+  background-color: #555555;
 }
 
 /* Profile, Login, and Cart buttons */
 .profile-button,
 .login-button {
-    font-size: 1.25rem;
-    color: inherit;
-    text-decoration: none;
-    margin: 0 1rem;
+  font-size: 1.25rem;
+  color: inherit;
+  text-decoration: none;
+  margin: 0 1rem;
 }
 
 .profile-button:hover,
 .login-button:hover {
-    color: #cfcfcf;
+  color: #cfcfcf;
 }
 
 /* Cart button styling */
 .cart-button {
-    position: relative;
-    font-size: 2rem;
-    color: inherit;
-    margin-left: 1rem; /* Add spacing between buttons */
+  position: relative;
+  font-size: 2rem;
+  color: inherit;
+  margin-left: 1rem; /* Add spacing between buttons */
 }
 
 .cart-button:hover {
-    color: #cfcfcf;
+  color: #cfcfcf;
 }
 
 /* Cart count badge styling */
 .cart-quantity {
-    position: absolute;
-    top: -0.5rem;
-    right: -0.5rem;
-    background-color: #e53e3e;
-    color: white;
-    border-radius: 50%;
-    width: 1.5rem; /* Slightly larger for better visibility */
-    height: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 600;
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  background-color: #e53e3e;
+  color: white;
+  border-radius: 50%;
+  width: 1.5rem; /* Slightly larger for better visibility */
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 /* Cart count in dark mode */
 .header.dark-mode .cart-quantity {
-    background-color: #ffffff;
-    color: #000000;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 /* Mobile menu icon styling */
 .mobile-menu {
-    background-color: #ffffff;
-    color: #000000;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-    margin-left: auto;
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin-left: auto;
 }
 
 .header.dark-mode .mobile-menu {
-    background-color: #000000;
-    color: #ffffff;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 .header.dark-mode .mobile-menu a {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 /* Mobile menu styling */
 .mobile-menu-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #ffffff;
-    color: #000000;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    display: none;
-    flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  display: none;
+  flex-direction: column;
 }
 
 .header.dark-mode .mobile-menu-dropdown {
-    background-color: #000000;
-    color: #ffffff;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 .mobile-menu.active + .mobile-menu-dropdown {
-    display: flex;
+  display: flex;
 }
 
 /* Mobile menu links */
 .mobile-menu-link {
-    font-size: 1rem;
-    color: inherit;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: inherit;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
 }
 
 .mobile-menu-link:hover {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .header.dark-mode .mobile-menu-link {
-    background-color: #333333;
+  background-color: #333333;
 }
 
 .header.dark-mode .mobile-menu-link:hover {
-    background-color: #444444;
+  background-color: #444444;
 }

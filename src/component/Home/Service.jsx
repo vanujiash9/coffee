@@ -5,21 +5,24 @@ const ServicesData = [
     id: 1,
     img: Img2,
     name: "Espresso",
-    description: "Cà phê Espresso đậm đà với hương vị mạnh mẽ, thích hợp cho những ai yêu thích sự mạnh mẽ và tinh tế.",
+    description:
+      "Cà phê Espresso đậm đà với hương vị mạnh mẽ, thích hợp cho những ai yêu thích sự mạnh mẽ và tinh tế.",
     aosDelay: "100",
   },
   {
     id: 2,
     img: Img2,
     name: "Americano",
-    description: "Cà phê Americano có vị nhẹ nhàng hơn với sự pha trộn hoàn hảo của cà phê espresso và nước nóng.",
+    description:
+      "Cà phê Americano có vị nhẹ nhàng hơn với sự pha trộn hoàn hảo của cà phê espresso và nước nóng.",
     aosDelay: "300",
   },
   {
     id: 3,
     img: Img2,
     name: "Cappuccino",
-    description: "Cappuccino là sự kết hợp hoàn hảo giữa espresso, sữa hơi và lớp bọt sữa mềm mại.",
+    description:
+      "Cappuccino là sự kết hợp hoàn hảo giữa espresso, sữa hơi và lớp bọt sữa mềm mại.",
     aosDelay: "500",
   },
 ];

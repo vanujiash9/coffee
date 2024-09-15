@@ -90,7 +90,10 @@ function Index() {
                 😃
               </span>
             </div>
-            <p id="exp" className="text-sm leading-none text-center text-gray-600">
+            <p
+              id="exp"
+              className="text-sm leading-none text-center text-gray-600"
+            >
               {/* Rating text */}
             </p>
             <div className="mt-6">
@@ -106,7 +109,10 @@ function Index() {
             </div>
             {showThankYou && (
               <div className="mt-6 text-center text-gray-600">
-                <p>Cảm ơn bạn đã phản hồi! Bạn đã đánh giá chúng tôi là: {feedback}</p>
+                <p>
+                  Cảm ơn bạn đã phản hồi! Bạn đã đánh giá chúng tôi là:{" "}
+                  {feedback}
+                </p>
               </div>
             )}
           </div>

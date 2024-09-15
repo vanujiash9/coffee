@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-const Checkout2 = () => {
+const Checkout3 = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [note, setNote] = useState("");
@@ -63,19 +63,23 @@ const Checkout2 = () => {
         return;
       }
 
-      // Save order to local storage
-      const orderDetails = {
-        customerInfo,
-        cartItems,
-        totalPrice: finalPrice,
+      // Create order object
+      const order = {
+        id: Date.now(), // Unique ID for the order
+        date: new Date().toLocaleDateString(),
+        total: `${finalPrice} VNĐ`,
+        status: "Đã thanh toán",
+        items: cartItems,
+        customer: { name, address, phone, email },
         note,
-        date: new Date().toISOString(),
       };
 
-      const orderHistory =
-        JSON.parse(localStorage.getItem("orderHistory")) || [];
-      orderHistory.push(orderDetails);
-      localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
+      // Get existing orders from localStorage
+      const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+      // Add the new order to existing orders
+      existingOrders.push(order);
+      // Save updated orders back to localStorage
+      localStorage.setItem("orders", JSON.stringify(existingOrders));
 
       Swal.fire({
         title: "Thanh toán thành công!",
@@ -98,7 +102,7 @@ const Checkout2 = () => {
 
   const discount = 28000;
   const shipping = 8000;
-  const finalPrice = totalPrice * 1000 - discount + shipping;
+  const finalPrice = totalPrice - discount + shipping;
 
   return (
     <div className="container mx-auto p-6">
@@ -126,12 +130,12 @@ const Checkout2 = () => {
                     <p className="text-gray-600">Số lượng: {item.quantity}</p>
                   </div>
                 </div>
-                <p className="font-semibold">{item.price * 1000} VNĐ</p>
+                <p className="font-semibold">{item.price} VNĐ</p>
               </div>
             ))}
             <div className="flex justify-between mt-4 text-lg font-semibold">
               <p>Tổng cộng:</p>
-              <p>{totalPrice * 1000} VNĐ</p>
+              <p>{totalPrice} VNĐ</p>
             </div>
             <div className="flex justify-between mt-2 text-lg font-semibold">
               <p>Giảm giá:</p>
@@ -205,4 +209,4 @@ const Checkout2 = () => {
   );
 };
 
-export default Checkout2;
+export default Checkout3;

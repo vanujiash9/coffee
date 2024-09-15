@@ -1,21 +1,66 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const Music = () => {
   // State để quản lý thứ tự sắp xếp, bài hát đang được chọn để đặt hàng, danh sách bài hát, bài hát mới và thông báo lỗi
-  const [sortOrder, setSortOrder] = useState('title');
+  const [sortOrder, setSortOrder] = useState("title");
   const [selectedSongs, setSelectedSongs] = useState([]);
-  const [newSong, setNewSong] = useState({ title: '', artist: '', album: '', duration: '' });
+  const [newSong, setNewSong] = useState({
+    title: "",
+    artist: "",
+    album: "",
+    duration: "",
+  });
   const [songs, setSongs] = useState([
-    { title: 'My Song Here', artist: 'Eminem', album: 'Spotify', duration: '5:35' },
-    { title: 'Another Song', artist: 'Drake', album: 'Apple Music', duration: '3:45' },
-    { title: 'One More Song', artist: 'Ariana Grande', album: 'YouTube Music', duration: '4:10' },
-    { title: 'Cool Song', artist: 'Post Malone', album: 'SoundCloud', duration: '2:55' },
-    { title: 'Nice Tune', artist: 'Billie Eilish', album: 'Spotify', duration: '3:25' },
-    { title: 'Chill Beat', artist: 'The Weeknd', album: 'Apple Music', duration: '4:30' },
-    { title: 'Upbeat Track', artist: 'Dua Lipa', album: 'YouTube Music', duration: '3:15' },
-    { title: 'Groovy Vibe', artist: 'Ed Sheeran', album: 'SoundCloud', duration: '5:00' }
+    {
+      title: "My Song Here",
+      artist: "Eminem",
+      album: "Spotify",
+      duration: "5:35",
+    },
+    {
+      title: "Another Song",
+      artist: "Drake",
+      album: "Apple Music",
+      duration: "3:45",
+    },
+    {
+      title: "One More Song",
+      artist: "Ariana Grande",
+      album: "YouTube Music",
+      duration: "4:10",
+    },
+    {
+      title: "Cool Song",
+      artist: "Post Malone",
+      album: "SoundCloud",
+      duration: "2:55",
+    },
+    {
+      title: "Nice Tune",
+      artist: "Billie Eilish",
+      album: "Spotify",
+      duration: "3:25",
+    },
+    {
+      title: "Chill Beat",
+      artist: "The Weeknd",
+      album: "Apple Music",
+      duration: "4:30",
+    },
+    {
+      title: "Upbeat Track",
+      artist: "Dua Lipa",
+      album: "YouTube Music",
+      duration: "3:15",
+    },
+    {
+      title: "Groovy Vibe",
+      artist: "Ed Sheeran",
+      album: "SoundCloud",
+      duration: "5:00",
+    },
   ]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   // Hàm sắp xếp
   const sortSongs = (songs, order) => {
@@ -43,7 +88,7 @@ const Music = () => {
 
   // Hàm xử lý việc đặt hàng
   const handleOrder = () => {
-    console.log('Ordered songs:', selectedSongs); // Debugging line
+    console.log("Ordered songs:", selectedSongs); // Debugging line
     // Thực hiện hành động đặt hàng bài hát ở đây
   };
 
@@ -51,10 +96,10 @@ const Music = () => {
   const handleAddSong = () => {
     if (newSong.title && newSong.artist && newSong.album && newSong.duration) {
       setSongs((prev) => [...prev, newSong]);
-      setNewSong({ title: '', artist: '', album: '', duration: '' }); // Reset input fields
-      setError(''); // Reset error message
+      setNewSong({ title: "", artist: "", album: "", duration: "" }); // Reset input fields
+      setError(""); // Reset error message
     } else {
-      setError('Please fill out all fields before adding a song.');
+      setError("Please fill out all fields before adding a song.");
     }
   };
 
@@ -62,23 +107,44 @@ const Music = () => {
     <div className="bg-black text-gray-300 min-h-screen p-10">
       {/* header */}
       <div className="flex">
-        <img className="mr-6 w-48 h-48 object-cover" src="https://i.scdn.co/image/ab67616d0000b273956664d3d68465fc45ea5941" alt="Album Art" />
+        <img
+          className="mr-6 w-48 h-48 object-cover"
+          src="https://i.scdn.co/image/ab67616d0000b273956664d3d68465fc45ea5941"
+          alt="Album Art"
+        />
         <div className="flex flex-col justify-center">
           {/* content */}
-          <h4 className="mt-0 mb-2 uppercase text-gray-500 tracking-widest text-xs">Playlist</h4>
-          <h1 className="mt-0 mb-2 text-white text-4xl">Spotify Album Page with Tailwind CSS</h1>
-          <p className="text-gray-600 mb-2 text-sm">With J. Cole, Quavo, Ty Dollar $ign</p>
-          <p className="text-gray-600 text-sm">Created by <a href="#spotify">Spotify</a> - 50 songs, 3 hr 2 min</p>
+          <h4 className="mt-0 mb-2 uppercase text-gray-500 tracking-widest text-xs">
+            Playlist
+          </h4>
+          <h1 className="mt-0 mb-2 text-white text-4xl">
+            Spotify Album Page with Tailwind CSS
+          </h1>
+          <p className="text-gray-600 mb-2 text-sm">
+            With J. Cole, Quavo, Ty Dollar $ign
+          </p>
+          <p className="text-gray-600 text-sm">
+            Created by <a href="#spotify">Spotify</a> - 50 songs, 3 hr 2 min
+          </p>
         </div>
       </div>
       {/* action buttons */}
       <div className="mt-6 flex justify-between">
         <div className="flex">
-          <button className="mr-2 bg-green-500 text-green-100 block py-2 px-8 rounded-full">Play</button>
-          <button className="mr-2 border border-white block p-2 rounded-full">
-            <img src="https://image.flaticon.com/icons/svg/2485/2485986.svg" height={25} width={25} alt="Like" />
+          <button className="mr-2 bg-green-500 text-green-100 block py-2 px-8 rounded-full">
+            Play
           </button>
-          <button className="mr-2 border border-white block p-2 rounded-full">...</button>
+          <button className="mr-2 border border-white block p-2 rounded-full">
+            <img
+              src="https://image.flaticon.com/icons/svg/2485/2485986.svg"
+              height={25}
+              width={25}
+              alt="Like"
+            />
+          </button>
+          <button className="mr-2 border border-white block p-2 rounded-full">
+            ...
+          </button>
         </div>
         <div className="text-gray-600 text-sm tracking-widest text-right">
           <h5 className="mb-1">Followers</h5>
@@ -110,7 +176,12 @@ const Music = () => {
           <div className="p-2 w-12 flex-shrink-0 text-right">⏱</div>
         </div>
         {sortSongs(songs, sortOrder).map((song, index) => (
-          <div key={index} className={`flex border-b border-gray-800 hover:bg-gray-800 ${selectedSongs.includes(song) ? 'bg-gray-700' : ''}`}>
+          <div
+            key={index}
+            className={`flex border-b border-gray-800 hover:bg-gray-800 ${
+              selectedSongs.includes(song) ? "bg-gray-700" : ""
+            }`}
+          >
             <div className="p-3 w-8 flex-shrink-0">
               <input
                 type="checkbox"
@@ -123,7 +194,9 @@ const Music = () => {
             <div className="p-3 w-full">{song.title}</div>
             <div className="p-3 w-full">{song.artist}</div>
             <div className="p-3 w-full">{song.album}</div>
-            <div className="p-3 w-12 flex-shrink-0 text-right">{song.duration}</div>
+            <div className="p-3 w-12 flex-shrink-0 text-right">
+              {song.duration}
+            </div>
             <div className="p-3 w-8 flex-shrink-0">
               <button
                 onClick={() => handleDeleteSong(song)}
